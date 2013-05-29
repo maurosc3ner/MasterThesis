@@ -1,0 +1,13 @@
+~/.gitignore
+
+*.log
+*.bbl
+*.blg
+*.toc
+*.lof
+*.aux
+*.dvi
+*.pdf
+*.rtf
+*.out
+Figures/
