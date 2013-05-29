@@ -1,0 +1,270 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex -- MAIN FILE (the one that you compile with LaTeX)
+%% ---------------------------------------------------------------- 
+
+% Set up the document
+\documentclass[a4paper, 11pt, oneside]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
+\graphicspath{{Figures/}}  % Location of the graphics files (set up for graphics to be in PDF format)
+
+% Include any extra LaTeX packages required
+%\usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
+\usepackage[comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
+\usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
+\usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
+%\usepackage{hyperref}
+%% ----------------------------------------------------------------
+\begin{document}
+\frontmatter	  % Begin Roman style (i, ii, iii, iv...) page numbering
+
+% Set up the Title Page
+\title  {NO NAME YET}
+\authors  {\texorpdfstring
+            {\href{mailto:Esteban.Correa@creatis.insa-lyon.fr}{Esteban Mauricio Correa Agudelo}}
+            {Esteban Mauricio Correa Agudelo}
+            }
+\addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
+\date       {\today}
+\subject    {}
+\keywords   {}
+
+\maketitle
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % It is better to have smaller font and larger line spacing than the other way round
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{}  % Clears all page headers and footers
+\rhead{\thepage}  % Sets the right side header to show the page number
+\lhead{}  % Clears the left side page header
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+%% ----------------------------------------------------------------
+% Declaration Page required for the Thesis, your institution may give you a different text to place here
+%\Declaration{
+%
+%\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+%
+%I, AUTHOR NAME, declare that this thesis titled, `THESIS TITLE' and the work presented in it are my own. I confirm that:
+%
+%\begin{itemize} 
+%\item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
+% 
+%\item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+% 
+%\item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
+% 
+%\item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+% 
+%\item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
+% 
+%\item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.
+%\\
+%\end{itemize}
+% 
+% 
+%Signed:\\
+%\rule[1em]{25em}{0.5pt}  % This prints a line for the signature
+% 
+%Date:\\
+%\rule[1em]{25em}{0.5pt}  % This prints a line to write the date
+%}
+%\clearpage  % Declaration ended, now start a new page
+
+%% ----------------------------------------------------------------
+% The " Quote Page"
+\pagestyle{empty}  % No headers or footers for the following pages
+
+\null\vfill
+% Now comes the " Quote", written in italics
+\textit{``La perseverancia y el esfuerzo \\ siempre ser\'{a}n recompensados con el \'{e}xito ...''}
+%\\
+%\\
+%--------------------
+%
+%\begin{tabbing}
+%\textit{On}\= \textit{ce again}, \\ \> \textit{to my family, }\\ \> \textit{to my teachers,} \\ \> \textit{to my friends...}
+%\end{tabbing}
+
+\begin{flushright}
+%Extraer algo ...
+\end{flushright}
+
+
+\vfill\vfill\vfill\vfill\vfill\vfill\null
+\clearpage  % Funny Quote page ended, start a new page
+%% ----------------------------------------------------------------
+
+% The Abstract Page
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+
+%Furthermore, coronary arteries play an important role in cardiovascular system and its diseases are mainly caused by the development and accumulation of plaques in artery walls. 
+
+Cardiovascular diseases remain to be the first cause of mortality in the world. In order to detect and quantify lesions in coronary arteries, a conservative approach is commonly followed, beginning with the localization of coronary starting points (ostia) and the extraction of the vessel centerline. This data is usually required to perform the lumen segmentation and helps lesion detection and stenosis quantification tasks. Due to its social, medical, and academic interest, this thesis presents some contributions to the study of coronary arteries in computed tomography angiography images, specially in the centerline extraction and lumen segmentation steps.
+
+First, we describe an axis extraction method developed in our team and we propose an algorithm to correct the centerlines. New axes seemed to be better in healthy sections, but still having problems close to calcified plaques and bifurcations. Then, we present six lumen segmentation methods falling into classical and classification approaches. Best qualitative results were obtained by methods based on region-growing and 2D active contours. In spite of a low Dice score using k-means clustering (66.48\%) compared to the result with a basic thresholding (65.20\%), the study shows some difficulties to validate with the reference data. This is caused by the presence of some regions that make part of the lumen, but were not are labeled as such and are therefore considered as false positives, e.g. a part of the aorta near the ostia. Additionally, all the techniques present important drawbacks due to the difficulty in expressing an explicit geometrical model and a generic intensity profile of coronary arteries, specially in bifurcations and lesions. Trying to avoid this explicit modeling, we used Support Vector Machines, considered as a powerful generic classification method, but we obtained poor segmentation results with Dice scores under 50\% and a considerable increase in computational costs during training phases. This is probably caused by a feature selection unsuited to describe the lumen. Finally, additional future efforts must be made in order to define a complete evaluation framework that  permits the method's comparison and the complete analysis in coronary arteries. 
+
+}
+
+\clearpage  % Abstract ended, start a new page
+%% ----------------------------------------------------------------
+
+% The Abstract Page
+\addtotoc{R\'{e}sum\'{e}}  % Add the "Abstract" page entry to the Contents
+\resume{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+
+Les maladies cardiovasculaires demeurent la premi\`{e}re cause de mortalit\'{e} dans le monde. Pour d\'{e}tecter et quantifier les l\'{e}sions dans les art\`{e}res coronaires, l'approche classique est de commencer par localiser de points de d\'{e}part des art\`{e}res (ostia) et d'extraire la ligne centrale (axe) du vaisseau. Ces donn\'{e}es sont n\'{e}cessaires pour ex\'{e}cuter la segmentation du lumen vasculaire et elles aident \`{a} la r\'{e}alisation des t\^{a}ches suivantes comme la d\'{e}tection de l\'{e}sions et la quantification de st\'{e}noses. En raison de l'int\'{e}r\^{e}t social, m\'{e}dical et acad\'{e}mique de ce sujet, ce m\'{e}moire pr\'{e}sente quelques contributions \`{a} l'\'{e}tude d'art\`{e}res coronaires dans des images d'angiographie par tomodensitom\'{e}trique, particuli\`{e}rement dans l'extraction des axes et la segmentation du lumen.
+
+Dans un premier temps, nous d\'{e}crivons une m\'{e}thode d'extraction des axes d\'{e}velopp\'{e}e dans notre groupe et nous proposons un algorithme pour le recentrage des axes dans les plans orthogonaux \`{a} leurs directions principales. Apr\`{e}s ce traitement, les nouveaux axes ont sembl\'{e} \^{e}tre mieux centr\'{e}s notamment dans le cas des sections saines, avec n\'{e}anmoins des probl\`{e}mes lorsque les axes pr\'{e}sentent des plaques calcifi\'{e}es ou des bifurcations. Suite \`{a} cela, nous pr\'{e}sentons six m\'{e}thodes de segmentation du lumen cat\'{e}goris\'{e}es dans deux groupes principaux: techniques classiques et techniques de classification. Les meilleurs r\'{e}sultats qualitatifs ont \'{e}t\'{e} obtenus par des m\'{e}thodes bas\'{e}es sur des contours actifs et de la croissance de r\'{e}gion. L'\'{e}tude montre quelques difficult\'{e}s pour faire une validation ad\'{e}quate avec les donn\'{e}es de r\'{e}f\'{e}rence, ce qui est une des raisons majeures qui fait que l'on obtient un score de Dice tr\`{e}s bas en utilisant un algorithme des k-moyennes (66.48 \%) score comparable aux r\'{e}sultats obtenus par un seuillage classique (65.20 \%), Ceci est caus\'{e} par la pr\'{e}sence des r\'{e}gions faisant partie du lumen vasculaire e.g. une partie de l'aorte pr\`{e}s de l'ostium, mais n'\'{e}tant pas annot\'{e}es comme telles. Ces r\'{e}gions sont donc reconnues comme des faux positifs. 
+
+\clearpage
+
+Toutes les techniques de segmentation test\'{e}es pr\'{e}sentent des inconv\'{e}nients importants en raison de la difficult\'{e} \`{a} exprimer un mod\`{e}le g\'{e}om\'{e}trique explicite et un profil d'intensit\'{e} g\'{e}n\'{e}rique des art\`{e}res coronaires, particuli\`{e}rement dans le cas de bifurcations et de l\'{e}sions. Afin d'\'{e}viter cette mod\'{e}lisation explicite, nous avons utilis\'{e} la m\'{e}thode de s\'{e}parateurs \`{a} vaste marge, consid\'{e}r\'{e}e comme une technique de classification puissante, mais nous avons obtenu des r\'{e}sultats faibles de segmentation avec un score Dice en dessous de 50\% et une augmentation consid\'{e}rable de co{\^u}ts informatiques pendant les phases d'entrainement. Ceci est probablement d{\^u} \`{a} une s\'{e}lection de descripteurs inadapt\'{e}e pour d\'{e}crire le lumen. Finalement, des efforts suppl\'{e}mentaires doivent \^{e}tre faits pour d\'{e}finir un cadre d'\'{e}valuation complet qui permettrait la comparaison des m\'{e}thodes et l'analyse des art\`{e}res coronaires.
+
+}
+
+\clearpage  % Abstract ended, start a new page
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+% The Acknowledgements page, for thanking everyone
+\acknowledgements{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+Firstly, I would like to thank my supervisors Marcela Hern\'{a}ndez and Maciej Orkisz for their support, their patience, for all their advices, and specially for their continuous confidence in my work throughout these years of labor. I would also like to say a big ``Thank you!'' to Maria Alejandra Zuluaga for all her support, she makes part of the persons that I admire the most, including also Marcela and Maciej. 
+
+I would also like to thank professors Jos\'{e} Tiberio Hern\'{a}ndez and Olivier Bernard for having supported the development of my master's studies. To Leonardo Fl\'{o}rez for his recent contribution with the project and my document. To some institutions and their staff that have sponsored this work: Interfacultades, Colciencias, CMIRA Scolarships.
+
+Maintenant, je voudrais dire merci \`{a} toutes les personnes de CREATIS (Xavier, Adeline -- merci pour les corrections!, Claire, info--dev, chercheurs, doctorants, stagiaires, ...) qui m'ont permis de conna{\^i}tre un peu plus la vie du labo. Agradezco a mis amigos colombianos, especialmente Carlos, Vanessa, Alfredo, Eduardo, Halime, Daniela, Nicole, Jenny,... gracias por aguantarme en esos momentos tan dif\'{i}ciles y estresantes. Y a mis amigas mexicanas, por hacerme sentir siempre como si estuviera en mi casa.
+
+Aunque son los \'{u}ltimos en esta lista, son y ser\'{a}n siempre los primeros y a quienes les debo m\'{a}s. Agradezco enormemente a mis padres y a mis hermanas, porque siempre est\'{a}n conmigo dandome toda la energ\'{i}a para lograr mis metas. Tambi\'{e}n a Paola por ser siempre un apoyo enorme e incondicional. Mi familia, esto es especialmente para ustedes!!
+
+}
+\clearpage  % End of the Acknowledgements
+%% ----------------------------------------------------------------
+
+\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+
+%% ----------------------------------------------------------------
+\lhead{\emph{Contents}}  % Set the left side page header to "Contents"
+\tableofcontents  % Write out the Table of Contents
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Figures}}  % Set the left side page header to "List if Figures"
+\listoffigures  % Write out the List of Figures
+
+%% ----------------------------------------------------------------
+%\lhead{\emph{List of Tables}}  % Set the left side page header to "List of Tables"
+%\listoftables  % Write out the List of Tables
+
+%% ----------------------------------------------------------------
+
+%\setstretch{1.5}  % Set the line spacing to 1.5, this makes the following tables easier to read
+%\clearpage  % Start a new page
+%\lhead{\emph{Abbreviations}}  % Set the left side page header to "Abbreviations"
+%\listofsymbols{ll}  % Include a list of Abbreviations (a table of two columns)
+%{
+%% \textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+%\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere \\
+%
+%}
+
+%% ----------------------------------------------------------------
+
+%\clearpage  % Start a new page
+%\lhead{\emph{Physical Constants}}  % Set the left side page header to "Physical Constants"
+%\listofconstants{lrcl}  % Include a list of Physical Constants (a four column table)
+%{
+%% Constant Name & Symbol & = & Constant Value (with units) \\
+%Speed of Light & $c$ & $=$ & $2.997\ 924\ 58\times10^{8}\ \mbox{ms}^{-\mbox{s}}$ (exact)\\
+%
+%}
+
+%% ----------------------------------------------------------------
+
+%\clearpage  %Start a new page
+%\lhead{\emph{Symbols}}  % Set the left side page header to "Symbols"
+%\listofnomenclature{lll}  % Include a list of Symbols (a three column table)
+%{
+%% symbol & name & unit \\
+%$a$ & distance & m \\
+%$P$ & power & W (Js$^{-1}$) \\
+%& & \\ % Gap to separate the Roman symbols from the Greek
+%$\omega$ & angular frequency & rads$^{-1}$ \\
+%}
+
+%% ----------------------------------------------------------------
+% End of the pre-able, contents and lists of things
+% Begin the Dedication page
+
+%\setstretch{1.3}  % Return the line spacing back to 1.3
+%
+%\pagestyle{empty}  % Page style needs to be empty for this page
+%\dedicatory{For/Dedicated to/To my\ldots}
+%
+%\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+
+
+%% ----------------------------------------------------------------
+\mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
+\pagestyle{fancy}  % Return the page headers back to the "fancy" style
+
+% Include the chapters of the thesis, as separate files
+% Just uncomment the lines as you write the chapters
+\lhead{\emph{Introduction}}  
+\input{./Chapters/01_Introduction} % Introduction
+
+%\input{./Chapters/02_MedicalContext} % Background Theory 
+%\lhead{\emph{Related Work}}  
+%\input{./Chapters/02_RelatedWork} % Experimental Setup
+
+%\lhead{\emph{Materials and Methods}}  
+%\input{./Chapters/03_Method} % Experiment 1
+
+%\lhead{\emph{Results}}  
+%\input{./Chapters/04_Results} % Experiment 2
+
+%\lhead{\emph{Conclusions}}  
+%\input{./Chapters/05_Conclusions} % Experiment 2
+
+%\input{./Chapters/Chapter6} % Results and Discussion
+
+%\input{./Chapters/Chapter7} % Conclusion
+
+%% ----------------------------------------------------------------
+% Now begin the Appendices, including them as separate files
+
+%\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+%\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+%\input{./Appendices/AppendixA}	% Appendix Title
+
+%\input{./Appendices/AppendixB} % Appendix Title
+
+%\input{./Appendices/AppendixC} % Appendix Title
+
+\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+\backmatter
+
+%% ----------------------------------------------------------------
+\label{References}
+\renewcommand\bibname{References}
+\lhead{\emph{References}}  % Change the left side page header to "Bibliography"
+\bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+\bibliography{References}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+\end{document}  % The End
+%% ----------------------------------------------------------------
