@@ -10,6 +10,13 @@ Many recent advanced studies has focused on this problematic, specially in coron
 This chapter will be mainly focuses on the most recent works in coronaries, specially the ones falling in the 3a group. Various axis extraction methods have been evaluated in~\citep{Metz2008} and demonstrated a high accuracy compared to reference axes. For this reason, even if it is still a hard task in terms of image processing, the results confirm the current feasibility of the assumption and the availability of a correct centerline for posterior processing tasks. In most of the cases, centerlines are also needed for posterior processing task such as stenosis detection and quantification.
 
 \section{Materials}
+ 
+The datasets were obtained from the publicly available Rotterdam Coronary Artery Algorithm Evaluation Framework (http://coronary.bigr.nl/). A total of twenty-six multi-center multi-vendor datasets were used for this study. Eight datasets from centerline extraction challenge, and the rest of them from the stenoses challenge. 
+
+METER TABLA DE RESUMEN DE DATASETS DE CAT
+
+For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Metz2008} and Kirişli et al. [KIRISLI CITATION] articles, or to the framework website.
+
 
 \section{Method}
 
@@ -19,7 +26,28 @@ This chapter will be mainly focuses on the most recent works in coronaries, spec
 
 In order to apply a minimal cost approach succesfully, a cost function is applied in every flux image voxel, giving the minimum cost to the high vessel response and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
 
-The Richard\'s curve [CITAR A RICHARDS CURVE] or generalized logistic function is a widely-used and flexible sigmoid function for growth modelling, extending the well-known logistic curve. There are 4 to 6 parameter versions in common use. In this case, we are going to start from the 6 parameter version that will fit a wide range of S-shaped growth curves.
+The Richard\'s curve [RICHARDS CURVE CITATION] or generalized logistic function is a widely-used and flexible sigmoid function for growth modelling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
+\begin{equation}
+\label{eq:eq_2_1}
+f\left( x;\delta,\beta,\gamma,\alpha,\mu,\nu\right) = \delta + \cfrac{\beta-\delta}{(1+\gamma e^{-\alpha(x-\mu)})^{1/\nu}}
+\end{equation}
+Where $\delta$ is the lower asymptote, $\beta$ is the upper asymptote, $\gamma$ is a variable which fixes the point of inflection, $\alpha$ is the growth rate; $\mu$ is the time of maximum growth and $\nu$ affects near which asymptote maximum growth occurs.
+From equation \ref{eq:eq_2_1}, Assuming that $\gamma$ and $\nu$ are constants equal to 1, we got:
+\begin{equation}
+\label{eq:eq_2_2}
+f\left( x;\delta,\beta,\alpha,\mu\right) = \delta + \cfrac{\beta-\delta}{1+e^{-\alpha(x-\mu)}}
+\end{equation}
+Once we have simplified the equation \ref{eq:eq_2_1}, we make the following assumptions in order to fit the particular flux image characteristics.
+\begin{equation}
+\label{eq:eq_2_3}
+\delta = Cmin + Cmax
+\end{equation}
+Where $Cmin$ is the minimum cost, and Cmax is the maximum cost to penalize the minimal cost algorithm. 
+\begin{equation}
+\label{eq:eq_2_4}
+\beta = Cmax
+\end{equation}
+Where $\beta$ is the upper asymptote when the flux voxel value is minimum.
 
 \subsection{Parameter optimization}
 
