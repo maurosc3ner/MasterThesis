@@ -28,29 +28,62 @@ Tests-and-Treatments/coronary-artery-bypass-grafting.aspx}{Jefferson University 
 	\label{fig:HeartVessels}
 \end{figure}
 
-%On the other hand, carotid arteries (left and right) transport blood to the head. In the lowest part, in the base of the neck, it could have a diameter of 6mm to 8mm. This first segment until the first bifurcation is called the common carotid artery. Then, two branches continue: the first one (external carotid artery) to the face and some external tissues, and the second one (internal carotid artery) supplies 80\% of the brain and the ocular orbits.
-
 Commonly, CVDs are due to atherosclerosis characterized by the development and accumulation of plaques of different materials (i.e. cholesterol, calcium, fibro-fatty deposits) in artery walls reducing the blood flow. These plaques can be classified in three types: 1) non-calcified plaques, having a lower density compared with the vessel lumen, 2) calcified plaques, presenting high density scores, and 3) mixed plaques that have non-calcified and calcified elements within a single plaque~\citep{Pundziute2007}.
 
-\subsection{Arteriography Vs. Computed Tomography Angiography }
-%
-Conventional invasive coronary angiography (arteriography) is still the standard procedure to diagnose CVDs. This method consists in the insertion of a catheter in a principal artery (usually in the leg or the forearm) until it arrives near the zone to be captured. At this point, a contrast agent is injected into the vessel and the zone is imaged using X-ray based techniques. The result is a projected image (angiogram) of arterial trees in the region of interest, obtained with a high refreshment rate. Looking at these images, physicians can detect possible diseases because of the reduction of lumen and blood flow. However, this method is very invasive requiring a high expertise to avoid complications (damages to internal arteries, alterations in pulse, etc.), it requires a continuous flow of radiation and contrast agent  injection, and sometimes the 2D projection hides narrowings that could be easily seen from another point of view.
+\section{Computer Aided Diagnosis}
+
+The number of imaging studies and the exponential grown of computation power have continued for half a century and is not expected to stop for at least another decade. In addition, the complicated medical image nature explains the interest to develop computer aided systems for medical diagnosis purposes \citep{Ginneken2011}.
+Today, computer-aided diagnosis (CAD) systems have been introduced as complementary tools to assist radiologists, focusing their attention to certain image areas where potential lesions could be placed. Interpreting a medical image is extremely challenging, anatomical structures, noise and artifacts, make the image complicated. Therefore CAD systems just serve as decision support tool for doctors in the diagnosis task. The doctor (generally a radiologist) is always responsible for the final interpretation of the entire image.
+
+\subsection{How It Works?}
+
+In general, three main steps can be distinguished in the literature on CAD systems (\citep{Ginneken2001}): 1) pre-processing techniques; 2) segmentation of anatomical structures; and 3) analysis usually aimed to detect a specific kind of abnormality. In pre-processing, calibration, resampling and noise removal are usually performed on scanned images. The anatomic regions division of an image is done in the segmentation step. Finally, different measures (size, intensity, geometry, among others) are done in the analyisis step to provide certain cues to doctors.
+
+In heart disease, multiple CAD systems has been designed aiming to detect and quantify coronary issues, [Goldelberg et al] is a good example of a CAD system used as a first simple triage step in clinical practice. Since the general process pipeline is similar through different medical fields, the literature [CITAR KIRISLI 2012] agrees with two specific workflows for coronary lesion diagnosis (\ref{fig:cad_wf}).
 
 \begin{figure}[htbp]
 	\centering
-		%\includegraphics[width=3.0in]{./Figures/RadiusEstimation.png}
-		\includegraphics[width=0.9\textwidth]{./Figures/CPRWidgetSMALL.png}
-	\caption[Visualization techniques for coronary arteries analysis.]{Left image presents 2D slices (axial, sagital, and coronal), center image is a volume rendering of the CTA, and right image presents CPR image with three orthogonal planes extracted at yellow, blue, and red locations.}
-	\label{fig:CPRWidget}
+		\includegraphics[width=0.4\textwidth]{./Figures/cad_lesion_workflow.png}
+	\caption[Coronary Lesion Detection Workflow]{Coronary Lesion Detection Workflow (source: \href{http://www.bigr.nl/publication/880}{Kirisli's Thesis}).}
+	\label{fig:cad_wf}
+\end{figure}
+
+\subsection{Evaluation of CAD systems}
+
+Assesment can be very challenging and is considered a pinnacle of the computer-aided diagnosis and one of the most studied areas in medical image analysis. Quantitative measures (Sensitivity and specificity) are only one way in the CAD systems evaluation spectrum \citep{Ginneken2011}. Sensitivity is determined by the percentage of positive cases well detected and placed by the CAD system. The number of false CAD marks per normal image or case is commonly used for specificity \citep{Castellino2005}. These measurements can be obtained by observing the performance of a CAD system on a set of ‘truth’ cases. The ground truth cases are generally established between multiple radiologist agreedment, adding inter-observer variation to the data. For instance, stand alone sensitivity and specificity measurements are not enough to quantify algorithm performance, even, it becomes more difficult to prove a clinically relevant improvement by a certain method. 
+
+Initiatives like the grand challenges in medical image analysis\footnote{Challenges objectives, rules, and results can be visited in \href{http://www.grand-challenge.org}{http://www.grand-challenge.org}.} address the evaluation challenge in medical imaging. It aims to create standard evaluation frameworks (tools and datasets) to compare proposed algorithms with state of the art methods \citep{Hameeteman2011, Schaap2009} , but, it is still an open discussion.
+
+FALTA CITAR A KIRISLI EN MICCAI2012
+
+\subsection{Arteriography}
+
+Conventional coronary angiography (CCA) is the standard procedure to diagnose CVDs. In summary, a catheter is inserted through the femoral artery or the hand, then contrast agent is injected into the coronary arteries making them visible to X-ray imaging. The image (angiogram) allows the radiologist detect possible vessel narrowing or plaque formations. However, this method is very invasive requiring high expertise to avoid complications (damages to internal arteries, alterations in pulse, etc.), in addition, it requires a continuous flow of dose radiation and contrast agent to the patient to perform the diagnose.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.9\textwidth]{./Figures/CCA_Hortense.png}
+	\caption[Conventional Coronary Angiography]{Conventional Coronary Angiography (CCA) (a) Right coronary artery tree. (b) Left coronary artery tree  (source: \href{http://www.bigr.nl/publication/880}{Kirisli's Thesis}).}
+	\label{fig:cca_im}
+\end{figure}
+
+\subsection{Computed Tomography Angiography }
+
+A computerized tomography (CT) coronary angiogram is an imaging test to look at the arteries that supply your heart muscle with blood. Unlike a traditional coronary angiogram, CT angiograms don't use a catheter threaded through your blood vessels to your heart. Instead, a coronary CT angiogram relies on a powerful X-ray machine to produce images of your heart and heart vessels. CT angiograms don't require the recovery time needed with traditional angiograms. Coronary CT angiograms are becoming a common option for people with a variety of heart conditions.
+
+CT angiograms will expose you to a small amount of radiation. If you have known coronary artery disease, a traditional coronary angiogram may be a better option, since you can also receive treatment for your artery blockages during a traditional coronary angiogram.
+
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=0.6\textwidth]{./Figures/ct_equipment.jpg}
+	\caption[Computed tomography equipment]{Computed tomography equipment (source: \href{http://www.radiologyinfo.org/}{RadiologyInfo.org}).}
+	\label{fig:ct_eq}
 \end{figure}
 
 Computed tomography angiography (CTA) is a non-invasive technique that consists of 3D acquisitions of the area of study, enhancing arteries by using a contrast medium. The high resolution of modern scanners (64-slice CT scanner can achieve a resolution of $0.3 \times 0.3 \times 0.4${\,}mm$^3$ per voxel) permits not only to make an approximation of the lumen volume, but also to locate and quantify soft and calcified plaques. Calcified lesions can be spotted as small, bright regions while soft plaques are usually lesions with lower intensity values than the artery lumen. The most common methods to study and visualize these images are multi-planar reformation (MPR), curved planar reformation (CPR), and 3D rendering techniques such as volume rendering or maximum intensity projections. Both MPR and CPR correspond to a set of 2D slices extracted from the original image: sagital, coronal, and axial views in the case of MPR, and a set of continuous slices, orthogonal to the axis tangent at each point, in the case of CPR (Figure \ref{fig:CPRWidget} \footnote{This visualization results make part of the creaCoro project (\href{http://www.creatis.insa-lyon.fr/site/en/CreaCoro}{http://www.creatis.insa-lyon.fr/site/en/CreaCoro}).}). A more detailed revision about these techniques, their advantages and disadvantages can be found in \citep{Wang2011Thesis}.
 
 Even if these new technologies improve the quality of the diagnosis and reduce the risks of invasive procedures, the amount of radiation used to obtain these images is considerably higher compared to the conventional methods. Moreover, the elevated quantity of data to evaluate due to 3D captures leads to other on-going challenges to detect clinically relevant problems.
-
-\section{State of the Art}
-
-Recently, Computer-aided simple triage (CAST) systems have appeared as 
 
 
 \section{Main Challenges and Workflow}
@@ -75,11 +108,12 @@ Despite the possibility to improve the study of arteries thanks to high 3D resol
 
 Considering these issues, the analysis of arteries and their pathologies is usually pursued by following a workflow that begins with the localization of some starting seed (generally at \textit{ostia} locations) in order to initialize an axis extraction algorithm to identify the path of the main arteries. Additionally, the lumen segmentation can also be a result of this step or, depending on the approach used, it can give a first approach to the volume of interest to be processed. After these first steps, both lesion detection and stenosis quantification can be achieved in order to present specific and objective data about diseases to physicians (Figure \ref{fig:Workflow}).
 
+
 \section{Institutional Context}
 %
 The project is part of a Franco-Colombian scientific collaboration developed by the following research teams: The Medical Imaging Research Center, CREATIS-UMR, Universit\'{e} Claude Bernard Lyon 1, Lyon, France; The Visual Computing Research Group, Imagine,Universidad de los Andes, Bogot\'{a}, Colombia and the Bio-informatics and Computer Graphics Group, Takina, Pontificia Universidad Javeriana, Bogot\'{a}, Colombia. In recent years, these institutions have permanently been working on carotid and coronary artery modeling in CTA images.
 
-Financial support for the projects of this collaboration has been provided by the Comit{\'e} ECOS Nord (C11S01) french grant; the Administrative Department of Science, Technology and Innovation of Colombia - COLCIENCIAS and Uniandes Interfacultades (06-2010). In Addition, this project is under the joint master degree program between the Electric Engineering Department of the University Claude Bernard Lyon 1 (UCBL) and the Systems Engineering Department of the Universidad de los Andes (Uniandes). 
+Financial support for the projects of this collaboration has been provided by the ECOS Nord Commitee grant (C11S01); the Administrative Department of Science, Technology and Innovation of Colombia - COLCIENCIAS and Uniandes Interfacultades (06-2010). In Addition, this project is under the joint master degree program between the Electric Engineering Department of the University Claude Bernard Lyon 1 (UCBL) and the Systems Engineering Department of the Universidad de los Andes (Uniandes). 
 
 \section{Internship Context}
 The work of this internship at CREATIS-UMR is the continuation of my first master year at uniandes. The topic of this tesis was carried out in the context of the ``Stenoses Detection, Quantification and Lumen Segmentation'' challenge. It was held during the 15th International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), Nice, France, 1-6 October 2012.

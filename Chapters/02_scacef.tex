@@ -4,7 +4,6 @@
 \section{Introduction}
 %
 
-
 Efficiently obtaining a reliable coronary artery centerline from computed tomography angiography data is relevant in clinical practice. From the computer aided dignosis point of view, many coronary vessel visualization techniques have been proposed to review CTA data[CADEMARTIRI et al.].  These visualizations can be used in quantitative analysis and diagnosis, surgical planning procedure (stent placement), among other things. Visualizations such multi-planar reformatting (MPR), and curved planar reformatting [Kanitsar et al.](CPR) use a central lumen line as a source, these techniques have succesfully been used as a starting point for lumen segmentation, stenosis grading and quantification and more. Therefore, having these centerlines is a prerequisite for automatic lesion detection task.
 
 In recent years, a variety of techniques have been proposed and evaluated succesfully [CITAR CAT08]. All of them, extract the coronary vessel centerlines from CTA images, and they are grouped according to its level of user interaction: automatic extraction methods, minimum user-interaction and interactive extraction.
@@ -21,15 +20,6 @@ more than twenty methods
  [CITAR todos los de CAT08 categoria 2](one seed per vessel is provided)
 [CITAR todos los de CAT08 categoria 3]  (more than one point per vessel as input)
 
-\section{Materials}
- 
-The datasets were obtained from the publicly available Rotterdam Coronary Artery Algorithm Evaluation Framework (http://coronary.bigr.nl/). A total of twenty-six multi-center multi-vendor datasets were used for this study. Eight datasets from centerline extraction challenge, and the rest of them from the stenoses challenge. 
-
-METER TABLA DE RESUMEN DE DATASETS DE CAT
-
-For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Metz2008} and Kirişli et al. [KIRISLI CITATION] articles, or to the framework website.
-
-
 \section{Method}
 
 \subsection{Flux and MFlux}
@@ -42,7 +32,7 @@ Flux is a gradient-based vesselness measure that exploits the orientation of gra
 
 In order to apply a minimal cost approach, a cost function is applied in every Flux vesselness voxel. The main idea is to give the minimum cost to high vessel responses and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
 
-The Richard's curve [RICHARDS CURVE CITATION] or generalized logistic function is a widely-used and flexible sigmoid function for growth modelling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
+The Richard's curve [RICHARDS CURVE CITATION] or generalized logistic function is a widely-used and flexible sigmoid function for growth modeling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
 \begin{equation}
 \label{eq:eq_2_1}
 f\left( x;\delta,\beta,\gamma,\alpha,\mu,\nu\right) = \delta + \cfrac{\beta-\delta}{(1+\gamma e^{-\alpha(x-\mu)})^{1/\nu}}
@@ -64,6 +54,18 @@ Where $Cmin$ is the minimum cost, and $Cmax$ is the maximum cost to penalize the
 \beta = Cmax
 \end{equation}
 Where $\beta$ is the upper asymptote when the flux voxel value is minimum.
+\begin{equation}
+\label{eq:eq_2_5}
+\mu = C \times mean(I_{Flux}) 
+\end{equation}
+We set $\mu$ as a multiplication between the mean volume vesselness response and a scalar $C$. $C$ is related to the radiuses evaluated.
+
+Finally, our cost function \ref{eq:eq_2_6} is in terms of Flux response and costs.
+\begin{equation}
+\label{eq:eq_2_6}
+f( I_{Flux};Cmin, Cmax, \alpha,\mu) == 2\times mean(I_{Flux}) 
+\end{equation}
+
 
 \subsection{Dealing with Bifurcations: Bezier's Curve}
 
@@ -73,7 +75,7 @@ As the Dijkstra's extraction advances, some part of the coronary artery vessel m
 	\centering
 		\includegraphics[width=0.7\textwidth]{./Figures/spline.png}
 		\includegraphics[width=0.7\textwidth]{./Figures/bezier.png}
-	\caption[Spline interpolation VS B\'ezier approximation. ]{2D illustration of a Spline interpolation VS a B\'ezier approximation  (source: \href{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/index.htm}{MIT 6.837 Lecture notes course}).}
+	\caption[Spline interpolation VS B\'ezier approximation]{2D illustration of a Spline interpolation VS a B\'ezier approximation  (source: \href{http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/index.htm}{MIT 6.837 Lecture notes}).}
 	\label{fig:sp_vs_bz}
 \end{figure}
 

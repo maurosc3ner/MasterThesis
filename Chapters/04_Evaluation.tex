@@ -16,33 +16,6 @@ METER TABLA DE RESUMEN DE DATASETS DE CAT
 
 For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Metz2008} and Kirişli et al. [KIRISLI CITATION] articles, or to the framework website.
 
-
-%\subsection{Cost Function}
-%In order to apply a minimal cost approach succesfully, a cost function is applied in every flux image voxel, giving the minimum cost to the high vessel response and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
-
-%The Richard\'s curve [RICHARDS CURVE CITATION] or generalized logistic function is a widely-used and flexible sigmoid function for growth modelling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
-%\begin{equation}
-%\label{eq:eq_2_1}
-%f\left( x;\delta,\beta,\gamma,\alpha,\mu,\nu\right) = \delta + \cfrac{\beta-\delta}{(1+\gamma e^{-\alpha(x-\mu)})^{1/\nu}}
-%\end{equation}
-%Where $\delta$ is the lower asymptote, $\beta$ is the upper asymptote, $\gamma$ is a variable which fixes the point of inflection, $\alpha$ is the growth rate; $\mu$ is the time of maximum growth and $\nu$ affects near which asymptote maximum growth occurs.
-%From equation \ref{eq:eq_2_1}, Assuming that $\gamma$ and $\nu$ are constants equal to 1, we got:
-%\begin{equation}
-%\label{eq:eq_2_2}
-%f\left( x;\delta,\beta,\alpha,\mu\right) = \delta + \cfrac{\beta-\delta}{1+e^{-\alpha(x-\mu)}}
-%\end{equation}
-%Once we have simplified the equation \ref{eq:eq_2_1}, we make the following assumptions in order to fit the particular flux image characteristics.
-%\begin{equation}
-%\label{eq:eq_2_3}
-%\delta = Cmin + Cmax
-%\end{equation}
-%Where $Cmin$ is the minimum cost, and Cmax is the maximum cost to penalize the minimal cost algorithm. 
-%\begin{equation}
-%\label{eq:eq_2_4}
-%\beta = Cmax
-%\end{equation}
-%Where $\beta$ is the upper asymptote when the flux voxel value is minimum.
-
 \section{Centerline Extraction Experiments}
 
 Both quantitative and qualitative evaluations were conducted to assess the performance of the method. The quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. The quantitative and qualitative evaluation measures used in this work are introduced in Section 2.5.4.
@@ -109,17 +82,15 @@ Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results
 \scriptsize
 \caption{Summary}
 \centering
-\begin{tabular}{|c|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}} &\multicolumn{3}{c|}{\textbf{rank}} \\
-\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}}\\
+\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}}  \\
+\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}}\\
 \hline
-OV& 8.5\%&100.0\%&84.3\%& 5.8&100.0&60.4&1&1& 1.00\\
-OF&10.1\%&100.0\%&65.3\%& 5.0&100.0&50.7&1&1& 1.00\\
-OT& 8.5\%&100.0\%&84.4\%& 5.4&100.0&59.2&1&1& 1.00\\
-AI&0.28 mm&0.56 mm&0.41 mm&21.7&41.3&29.2&1&1& 1.00\\
-\hline
-\textbf{Total}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{1}&\textbf{1}&\textbf{ 1.00}\\
+OV& 8.5\%&100.0\%&84.3\%& 5.8&100.0&60.4\\
+OF&10.1\%&100.0\%&65.3\%& 5.0&100.0&50.7\\
+OT& 8.5\%&100.0\%&84.4\%& 5.4&100.0&59.2\\
+AI&0.28 mm&0.56 mm&0.41 mm&21.7&41.3&29.2\\
 \hline
 \end{tabular}
 \vspace{-0.3cm}
@@ -191,17 +162,15 @@ Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6}  presents the results
 \scriptsize
 \caption{Summary}
 \centering
-\begin{tabular}{|c|ccc|ccc|ccc|}
+\begin{tabular}{|c|ccc|ccc|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}} &\multicolumn{3}{c|}{\textbf{rank}} \\
-\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}}\\
+\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}} \\
+\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} \\
 \hline
-OV&13.9\%&100.0\%&84.4\%& 9.0&100.0&57.8&1&1& 1.00\\
-OF& 9.6\%&100.0\%&73.8\%& 4.8&100.0&54.2&1&1& 1.00\\
-OT&13.9\%&100.0\%&84.9\%& 9.0&100.0&59.4&1&1& 1.00\\
-AI&0.27 mm&0.52 mm&0.40 mm&22.5&43.1&30.1&1&1& 1.00\\
-\hline
-\textbf{Total}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{1}&\textbf{1}&\textbf{ 1.00}\\
+OV&13.9\%&100.0\%&84.4\%& 9.0&100.0&57.8\\
+OF& 9.6\%&100.0\%&73.8\%& 4.8&100.0&54.2\\
+OT&13.9\%&100.0\%&84.9\%& 9.0&100.0&59.4\\
+AI&0.27 mm&0.52 mm&0.40 mm&22.5&43.1&30.1\\
 \hline
 \end{tabular}
 \vspace{-0.3cm}
