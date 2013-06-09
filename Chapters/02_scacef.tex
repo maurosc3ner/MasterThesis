@@ -3,15 +3,11 @@
 
 \section{Introduction}
 %
-
-Efficiently obtaining a reliable coronary artery centerline from computed tomography angiography data is relevant in clinical practice. From the computer aided dignosis point of view, many coronary vessel visualization techniques have been proposed to review CTA data[CADEMARTIRI et al.].  These visualizations can be used in quantitative analysis and diagnosis, surgical planning procedure (stent placement), among other things. Visualizations such multi-planar reformatting (MPR), and curved planar reformatting [Kanitsar et al.](CPR) use a central lumen line as a source, these techniques have succesfully been used as a starting point for lumen segmentation, stenosis grading and quantification and more. Therefore, having these centerlines is a prerequisite for automatic lesion detection task.
-
-In recent years, a variety of techniques have been proposed and evaluated succesfully [CITAR CAT08]. All of them, extract the coronary vessel centerlines from CTA images, and they are grouped according to its level of user interaction: automatic extraction methods, minimum user-interaction and interactive extraction.
-
+Efficiently obtaining a reliable coronary artery centerline from computed tomography angiography data is relevant in clinical practice. From the computer aided dignosis point of view, many vessel visualization techniques have been proposed to review CTA data[CADEMARTIRI et al.].  These visualizations can be used in quantitative analysis and diagnosis, surgical planning procedure (stent placement), among other things. Visualizations such multi-planar reformatting (MPR), and curved planar reformatting [Kanitsar et al.](CPR) use the central lumen line as a source, these techniques have succesfully been used as a starting point for lumen segmentation, stenosis grading, quantification and more. Therefore, having these centerlines is a prerequisite for the automatic lesion detection task.
+In recent years, a variety of techniques have been proposed and evaluated succesfully [CITAR CAT08]. All of them, extract the coronary vessel centerlines from CTA images, and they are grouped according to its level of user interaction: automatic extraction, minimum user-interaction and interactive extraction methods.
 This method finds a coronary vessel centerline interactively. Two seed points are manually placed by the radiologist and the path is automatically extracted using a minimum cost path approach (Dijkstra’s algorithm). The cost to travel through a voxel is based on a generalized logistic function applied to the non-linear flux vesselness response [CITAR A LESAGE] of the CTA image. Selective vessel radiuses can be provided to get rid off erroneously connected structures such coronary veins. Results shown robust and accurate centerline extraction in multi-vendor datasets.
 
 This chapter is organized as follows... 
-
 
 \section{Related Work}
 
@@ -20,15 +16,15 @@ more than twenty methods
  [CITAR todos los de CAT08 categoria 2](one seed per vessel is provided)
 [CITAR todos los de CAT08 categoria 3]  (more than one point per vessel as input)
 
-\section{Method}
 
-\subsection{Flux and MFlux}
+
+\section{Flux and MFlux}
 
 Flux is a gradient-based vesselness measure that exploits the orientation of gradient vectors by computing the gradient flux through the surface of an object. The flux F(S) through a surface S is defined as:
 
+\section{Dijkstra}
 
-
-\subsection{Cost Function}
+\section{Cost Function}
 
 In order to apply a minimal cost approach, a cost function is applied in every Flux vesselness voxel. The main idea is to give the minimum cost to high vessel responses and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
 
@@ -66,8 +62,7 @@ Finally, our cost function \ref{eq:eq_2_6} is in terms of Flux response and cost
 f( I_{Flux};Cmin, Cmax, \alpha,\mu) == 2\times mean(I_{Flux}) 
 \end{equation}
 
-
-\subsection{Dealing with Bifurcations: Bezier's Curve}
+\section{Dealing with Bifurcations: Bezier's Curve}
 
 As the Dijkstra's extraction advances, some part of the coronary artery vessel may present multiple centerpoints due to a vessel division (bifurcation). In order to refine the centerline points into individual vessels. A B\'ezier's approximation [CITAR A BEZIER] is applied as a refinement step (post-processing) (Figure \ref{fig:sp_vs_bz}). 
 
@@ -80,126 +75,11 @@ As the Dijkstra's extraction advances, some part of the coronary artery vessel m
 \end{figure}
 
 
-\subsection{Parameter optimization}
+\section{Parameter optimization}
 
 Some parameter optimization can be done in the equation cost equation. The slope is always
 
-%\section{Experiments: Two MICCAI Challenges}
-%
-%Both quantitative and qualitative evaluations were conducted to assess the performance of the method. The quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. The quantitative and qualitative evaluation measures used in this work are introduced in Section 2.5.4.
-%
-%\subsection{Experiment I: MICCAI2008}
-%
-%The first experiment was done using the eight training datasets from CAT08 challenge. For each patient, four vessels are provided in separated files. Since the consensus centerlines (done by three observers) are available in this experiment with their inter-observer variability measures, a quantitative analysis was performed using the standard framework proposed by (CITAR CAT08 METZ). Also, a dataset submission was done to the Web-based evaluation framework in order to verify the method results.
-%
-%\subsection{Experiment II: MICCAI2012}
-%
-%\section{Results}
-%
-%\subsection{Experiment I: MICCAI2008}
-%
-%Tables 1.* presents the results of the semi-automatic coronary centerline extraction on the CTA datasets submitted to the Web-based platform. The following average results were obtained. A 84.3\% overlap with expert human manual annotations was achieved, until the first failure (OF) 65.3\%, in clinically relevant segments (radius $>$ 1.5 mm, OT) 84.4\%. In terms of accuraccy within the vessel (AI) an average of 0.41 mm where obtained. Generally, the method gets a 9$^{th}$ position in the overlaping rank and 12$^{th}$ position for the accuraccy rank in comparison with the CAT08 methods. Visual inspection revealed that most extraction errors occurred at the start of the vessel and near to the ostium.
-%
-%\begin{table*}
-%\scriptsize
-%\caption{Average overlap per dataset}
-%\centering
-%\begin{tabular}{|c|ccc|ccc|ccc|c|}
-%\hline
-%\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{OV}} &\multicolumn{3}{c|}{\textbf{OF}} &\multicolumn{3}{c|}{\textbf{OT}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-%\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-%\hline
-%0&96.2&73.7& 1.00&69.5&65.2& 1.00&96.2&73.7& 1.00& 1.00\\
-%1&95.0&47.6& 1.00&95.0&47.5& 1.00&95.0&47.5& 1.00& 1.00\\
-%2&99.4&74.8& 1.00&92.2&71.4& 1.00&99.4&74.8& 1.00& 1.00\\
-%3&64.5&49.9& 1.00&47.2&43.5& 1.00&64.5&49.6& 1.00& 1.00\\
-%4&70.3&58.5& 1.00&88.8&67.7& 1.00&71.0&60.7& 1.00& 1.00\\
-%5&95.8&56.8& 1.00&40.4&20.2& 1.00&95.8&48.1& 1.00& 1.00\\
-%6&76.9&63.9& 1.00&73.6&64.1& 1.00&77.1&63.8& 1.00& 1.00\\
-%7&78.4&40.4& 1.00&16.7&9.0& 1.00&78.4&39.7& 1.00& 1.00\\
-%\hline
-%\textbf{Avg.}&\textbf{84.3}&\textbf{60.4}&\textbf{ 1.00}&\textbf{65.3}&\textbf{50.7}&\textbf{ 1.00}&\textbf{84.4}&\textbf{59.2}&\textbf{ 1.00}&\textbf{ 1.00}\\
-%\hline
-%\end{tabular}
-%\vspace{-0.3cm}
-%\label{}
-%\normalsize
-%\end{table*}
-%
-%\begin{table*}
-%\scriptsize
-%\caption{Average accuracy per dataset}
-%\centering
-%\begin{tabular}{|c|ccc|c|}
-%\hline
-%\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{AI}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-%\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{mm}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-%\hline
-%0&0.43&33.8& 1.00& 1.00\\
-%1&0.42&30.6& 1.00& 1.00\\
-%2&0.38&27.6& 1.00& 1.00\\
-%3&0.49&29.6& 1.00& 1.00\\
-%4&0.35&27.3& 1.00& 1.00\\
-%5&0.43&34.5& 1.00& 1.00\\
-%6&0.37&27.2& 1.00& 1.00\\
-%7&0.43&24.3& 1.00& 1.00\\
-%\hline
-%\textbf{Avg.}&\textbf{0.41}&\textbf{29.2}&\textbf{ 1.00}&\textbf{ 1.00}\\
-%\hline
-%\end{tabular}
-%\vspace{-0.3cm}
-%\label{}
-%\normalsize
-%\end{table*}
-%
-%\begin{table*}
-%\scriptsize
-%\caption{Summary}
-%\centering
-%\begin{tabular}{|c|ccc|ccc|ccc|}
-%\hline
-%\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}} &\multicolumn{3}{c|}{\textbf{rank}} \\
-%\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}}\\
-%\hline
-%OV& 8.5\%&100.0\%&84.3\%& 5.8&100.0&60.4&1&1& 1.00\\
-%OF&10.1\%&100.0\%&65.3\%& 5.0&100.0&50.7&1&1& 1.00\\
-%OT& 8.5\%&100.0\%&84.4\%& 5.4&100.0&59.2&1&1& 1.00\\
-%AI&0.28 mm&0.56 mm&0.41 mm&21.7&41.3&29.2&1&1& 1.00\\
-%\hline
-%\textbf{Total}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{}&\textbf{1}&\textbf{1}&\textbf{ 1.00}\\
-%\hline
-%\end{tabular}
-%\vspace{-0.3cm}
-%\label{}
-%\normalsize
-%\end{table*}
-%
-%\subsection{Experiment II: MICCAI2012}
-%
-%\section{Discussion}
-%
-%\section{Conclusion}
-%
-%We show a novel cost function that performs well in flux images. Through quantitative and qualitative evaluations on MICCAI08 and MICCAI12 datasets, we demonstrated that robust and accurate semi-automatic centerline extraction can be achieved. Since the accuracy is close to the inter-observer variability and the success rate is high (near to G\&T performance), the semi-automatic centerline extraction method might be used to extract functional coronary axes from CTA data. Finally, we propose a parameters optimization that does not affect the dikjstra footprint within implementation pipeline execution.
-%
-%To conclude, minimum cost path approaches have potential for coronary artery centerline extraction, but improvements, especially regarding the accuracy of the method, still need investigations.
 
-%\section{Preprocessing}
-%Some techniques require initial preprocessing steps not only for lumen segmentation, but also for axis extraction and stenosis detection. In order to enhance vessels and to have an starting point to segment, some functions have been proposed based on geometrical \textit{a priori} and statistical regression methods.
-
-%One of the most common methods to enhance vessels was developed by \cite{Frangi1998} who proposed a multiscale method using a vesselness function based on Hessian matrix eigenanalysis. Despite of the good results of this method detecting tubular structures, it has elevated computational costs and presents problems in bifurcations and pathologies. \cite{Zhou2012} proposed changes in the Hessian-based vesselness function to obtain more accurate results and \cite{Zheng2011} defined a new learning-based vesselness function with better detection rates and faster computation. Other work preprocessed the image according to a prior knowledge of tissue densities expressed in Hounsfield Units (HU), e.g.: to focus on the arterial lumen, \cite{Lesage2009Thesis} proposed to discard the densities beyond the range -24{\,}HU to 576{\,}HU, thus keeping voxels with a higher intensity than lung CT numbers and lower than calcifications. This is a simple method that can be useful to avoid the inclusion of calcified plaques, but can have different results depending on the acquisition, e.g.: make holes in lumen, or eliminate distal parts of the artery. A more image-dependent calculation of thresholding parameters is presented in \citep{Tessmann2011} with the analysis of the centerline histogram.
-
-%Furthermore, some studies extend preprocessing to obtain an initial rough estimation of the vessel 3D geometry. This process helps to define a limited region to run more sophisticated algorithms reducing false positives and computational time. \cite{Carrillo2007} and \cite{Zhou2012} used spheres centered in the already extracted axis points with radii deduced from an estimate of the artery size. Linear \citep{Xu2012} and non-linear approaches~\citep{Schaap2011, Kelm2011} have been also followed to approximate vessel diameters at a certain distance from the ostia. Another approach~\citep{Shahzad2010} created a probability density field of coronary arteries based on registration of annotated CTA images.
-
-%\section{Coronary Lumen Segmentation}
-
-%Various solutions to vessel segmentation have been tested and reported in literature, from the most basic image processing techniques to the most advanced algorithms. One of the most classical approaches is region growing, which performs an iterative segmentation based on an inclusion criterion between some seed points (manually or automatically defined) and their vicinity. If neighboring voxels fulfill this condition, they are added as new seed points to continue the process. \cite{Bouraoui2008} detected ostia location to use them as seed points in a region-growing algorithm with a gray-level hit-or-miss transform as inclusion criteria. \cite{Renard2008} and  \cite{Tek2011} used points of a previously extracted axis as seed points to calculate thresholds and thus define the growing condition. The main drawback of region-growing is the difficulty to define an efficient stopping criterion and avoid leakages near to similar structures. \cite{Metz2007} proposed an additional restriction in order to avoid leakages by detecting a sudden large increase in the segmented volume.
-
-%Other restrictions can be set based on geometrical information and the adaptivity of the segmented mask into the vessel contours. \cite{Nain2004} exposed some preliminary results in CTA images of a segmentation method using an implicit deformable model with a soft shape prior, but no quantitative results were presented. 
-
-%According to authors' validation tests and to the best of our knowledge, the two most accurate coronary segmentation methods respectively use a coarse-to-fine method with a robust combination of linear and non-linear regressions~\citep{Schaap2011}, and a minimum average-cost path model that extracts vessel axis and estimates a vessel radius for each axis point~\citep{Zhu2011}. However, the lack of standard validation data for coronary arteries segmentation increases the difficulty to compare the methods. Most of this work exposed qualitative results and some comparisons with the reference centerlines of MICCAI Challenge 2008, but just a few give information about overlap measures (e.g. Dice score) of segmented masks. The objective of the MICCAI Challenge 2012 is to bridge this gap.
-
-%\section{Stenosis Detection}
 CITAS A BUSCAR Y AGREGAR
 F. Cademartiri, L. L. Grutta, A. Palumbo, P. Malagutti, F. Pugliese, W. B. Meijboom, T. Baks, N. R. Mollet, N. Bruining, R. Hamers, and P. J. de Feyter. Non-invasive vi- sualization of coronary atherosclerosis: state-of-art. Journal of Cardiovascular Medicine, 8(3):129–137, 2007.
 

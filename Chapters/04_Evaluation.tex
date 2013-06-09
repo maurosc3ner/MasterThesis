@@ -14,187 +14,59 @@ The datasets were obtained from the publicly available Rotterdam Coronary Artery
 
 METER TABLA DE RESUMEN DE DATASETS DE CAT
 
-For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Metz2008} and Kirişli et al. [KIRISLI CITATION] articles, or to the framework website.
+For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Schaap2009} and Kirişli et al. ~\citep{Kirisli2013} articles, or to the framework website.
+
+\section{Evaluation Measures}
+
+Four different measures (three for overlapping and one for accuraccy assesment) are used in this section. All of them are based on the terms defined by \citep{Schaap2009} (See \ref{fig:exp3_ms}).
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.0\textwidth]{./Figures/eval_ms.png}
+	\caption[Coronary Centerline Evaluation Measures CAT08]{Evaluation Measures used at CAT08 (source: \citep{Schaap2009}).}
+	\label{fig:exp3_ms}
+\end{figure}
+
+From the overlap point of view, overlap \textbf{(OV)} represents the ability to track the complete vessel annotated by the human observers; overlap until first error \textbf{(OF)} determines how much of a coronary artery has been extracted before making the first error; Finally, overlap with the clinically relevant part of the vessel \textbf{(OT)} gives an indication how the method is able to track a clinical relevant vessel section. An algorithm score of 100 points is a perfect match between us and the reference, a score equal to 0 is a total failure in the extraction. In the accuraccy side, average inside \textbf{(AI)} is the average distance inside the vessel, it uses the annotated radius to score it. The observer score equal to 50 points, say if we do better ($>$50 points) or worst ($<$50 points).
 
 \section{Centerline Extraction Experiments}
 
-Both quantitative and qualitative evaluations were conducted to assess the performance of the method. The quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. The quantitative and qualitative evaluation measures used in this work are introduced in Section 2.5.4.
-
-The centerline experiments where done using the eight training datasets from CAT08 challenge. For each patient, four vessels are provided in separated files. Since the consensus centerlines (done by three observers) are available in this experiment with their inter-observer variability measures, a quantitative analysis was performed using the standard framework proposed by (CITAR CAT08 METZ). Also, dataset submissions have been sent to the Web-based evaluation framework in order to verify the method results.
+Both quantitative and qualitative evaluations were conducted to assess the performance of the method. The quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. The quantitative and qualitative evaluation measures used in this work were introduced in the section above.
 
 \subsection{Experiment I: MFlux in CAT08 Challenge}
 
-Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results of the semi-automatic coronary centerline extraction on the CTA datasets submitted to the Web-based platform. The following average results were obtained. A 84.3\% overlap with expert human manual annotations was achieved, until the first failure (OF) 65.3\%, in clinically relevant segments (radius $>$ 1.5 mm, OT) 84.4\%. In terms of accuraccy within the vessel (AI) an average of 0.41 mm where obtained. Generally, the method gets a 9$^{th}$ position in the overlaping rank and 12$^{th}$ position for the accuraccy rank in comparison with the CAT08 methods. Visual inspection revealed that most extraction errors occurred at the start of the vessel and near to the ostium. 
+The centerline experiments where done using the eight training datasets from CAT08 challenge. For each patient, four vessels are provided in separated files. Since the consensus centerlines (done by three observers) are available in this experiment with their inter-observer variability measures, a quantitative analysis was performed using the standard framework proposed by ~\citep{Schaap2009}. Also, dataset results have been sent to the Web-based evaluation framework in order to verify the method results.
 
-\begin{table*}
-\scriptsize
-\caption{Average overlap per dataset}
-\centering
-\begin{tabular}{|c|ccc|ccc|ccc|c|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{OV}} &\multicolumn{3}{c|}{\textbf{OF}} &\multicolumn{3}{c|}{\textbf{OT}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-\hline
-0&96.2&73.7& 1.00&69.5&65.2& 1.00&96.2&73.7& 1.00& 1.00\\
-1&95.0&47.6& 1.00&95.0&47.5& 1.00&95.0&47.5& 1.00& 1.00\\
-2&99.4&74.8& 1.00&92.2&71.4& 1.00&99.4&74.8& 1.00& 1.00\\
-3&64.5&49.9& 1.00&47.2&43.5& 1.00&64.5&49.6& 1.00& 1.00\\
-4&70.3&58.5& 1.00&88.8&67.7& 1.00&71.0&60.7& 1.00& 1.00\\
-5&95.8&56.8& 1.00&40.4&20.2& 1.00&95.8&48.1& 1.00& 1.00\\
-6&76.9&63.9& 1.00&73.6&64.1& 1.00&77.1&63.8& 1.00& 1.00\\
-7&78.4&40.4& 1.00&16.7&9.0& 1.00&78.4&39.7& 1.00& 1.00\\
-\hline
-\textbf{Avg.}&\textbf{84.3}&\textbf{60.4}&\textbf{ 1.00}&\textbf{65.3}&\textbf{50.7}&\textbf{ 1.00}&\textbf{84.4}&\textbf{59.2}&\textbf{ 1.00}&\textbf{ 1.00}\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_1}
-\normalsize
-\end{table*}
+\subsection{Experiment II: MFlux in MICCAI2012 Challenge}
 
-\begin{table*}
-\scriptsize
-\caption{Average accuracy per dataset}
-\centering
-\begin{tabular}{|c|ccc|c|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{AI}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{mm}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-\hline
-0&0.43&33.8& 1.00& 1.00\\
-1&0.42&30.6& 1.00& 1.00\\
-2&0.38&27.6& 1.00& 1.00\\
-3&0.49&29.6& 1.00& 1.00\\
-4&0.35&27.3& 1.00& 1.00\\
-5&0.43&34.5& 1.00& 1.00\\
-6&0.37&27.2& 1.00& 1.00\\
-7&0.43&24.3& 1.00& 1.00\\
-\hline
-\textbf{Avg.}&\textbf{0.41}&\textbf{29.2}&\textbf{ 1.00}&\textbf{ 1.00}\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_2}
-\normalsize
-\end{table*}
+During the ``Stenoses Detection, Quantification and Lumen Segmentation challenge'', our team failed extracting some  vessels in problematic images (dataset 01 and dataset 05). Therefore, a correct and complete extraction is mandatory with this new version. Figure \ref{fig:exp2_dt05} shows our new framework processing one of the problematic datasets (dataset 05).
 
-\begin{table*}
-\scriptsize
-\caption{Summary}
-\centering
-\begin{tabular}{|c|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}}  \\
-\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}}\\
-\hline
-OV& 8.5\%&100.0\%&84.3\%& 5.8&100.0&60.4\\
-OF&10.1\%&100.0\%&65.3\%& 5.0&100.0&50.7\\
-OT& 8.5\%&100.0\%&84.4\%& 5.4&100.0&59.2\\
-AI&0.28 mm&0.56 mm&0.41 mm&21.7&41.3&29.2\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_3}
-\normalsize
-\end{table*}
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=4.0in]{./Figures/dt05v01.png}
+		\includegraphics[width=4.0in]{./Figures/dt05v01_cpr.png}
+	\caption[MICCAI2012 Extraction]{\textit{Top}, Interactive RCA vessel extraction (dataset 05) . \textit{Bottom}, CPR visualization of the vessel extracted.}
+	\label{fig:exp2_dt05}
+\end{figure}
 
+\subsection{Experiment III: MFlux VS Gulsun \& Tek (itkRGC)}
 
+In the third experiment, we investigate the robustness of our method against a new version of Gulsun \& Tek developed by our team at Creatis. The performance of the team implementation (Gulsun \& Tek) was evaluated on the same CAT08 datasets. An additional results submission was done to the Web-platform. Also, problematic datasets at MICCAI2012 were visually evaluated with the two implementations (MFlux, G \& T). Figure ~\ref{fig:exp3_cpr} shows an axe extracted by the methods against the reference.
 
-\subsection{Experiment II: MFlux VS Gulsun \& Tek itkRGC}
-
-
-
-Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6}  presents the results of the semi-automatic coronary centerline extraction on the CTA datasets submitted to the Web-based platform. The following average results were obtained. A 84.3\% overlap with expert human manual annotations was achieved, until the first failure (OF) 65.3\%, in clinically relevant segments (radius $>$ 1.5 mm, OT) 84.4\%. In terms of accuraccy within the vessel (AI) an average of 0.41 mm where obtained. Generally, the method gets a 9$^{th}$ position in the overlaping rank and 12$^{th}$ position for the accuraccy rank in comparison with the CAT08 methods. Visual inspection revealed that most extraction errors occurred at the start of the vessel and near to the ostium.
-
-\begin{table*}
-\scriptsize
-\caption{Average overlap per dataset}
-\centering
-\begin{tabular}{|c|ccc|ccc|ccc|c|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{OV}} &\multicolumn{3}{c|}{\textbf{OF}} &\multicolumn{3}{c|}{\textbf{OT}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-\hline
-0&91.5&46.7& 1.00&64.6&38.5& 1.00&91.5&46.7& 1.00& 1.00\\
-1&100.0&100.0& 1.00&100.0&100.0& 1.00&100.0&100.0& 1.00& 1.00\\
-2&98.2&61.9& 1.00&88.7&58.3& 1.00&98.1&61.8& 1.00& 1.00\\
-3&71.1&56.7& 1.00&70.6&67.4& 1.00&71.1&52.9& 1.00& 1.00\\
-4&91.3&69.1& 1.00&91.7&69.2& 1.00&93.5&72.1& 1.00& 1.00\\
-5&92.9&50.6& 1.00&44.9&22.5& 1.00&92.9&46.6& 1.00& 1.00\\
-6&81.6&65.8& 1.00&84.0&67.0& 1.00&83.2&79.1& 1.00& 1.00\\
-7&48.2&25.2& 1.00&49.5&25.7& 1.00&48.2&24.3& 1.00& 1.00\\
-\hline
-\textbf{Avg.}&\textbf{84.4}&\textbf{57.8}&\textbf{ 1.00}&\textbf{73.8}&\textbf{54.2}&\textbf{ 1.00}&\textbf{84.9}&\textbf{59.4}&\textbf{ 1.00}&\textbf{ 1.00}\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_4}
-\normalsize
-\end{table*}
-
-\begin{table*}
-\scriptsize
-\caption{Average accuracy per dataset}
-\centering
-\begin{tabular}{|c|ccc|c|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Dataset}} &\multicolumn{3}{c|}{\textbf{AI}} &\multicolumn{1}{c|}{\textbf{Avg.}} \\
-\multicolumn{1}{|c|}{\textbf{nr.}} &\multicolumn{1}{c|}{\textbf{mm}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{rank}} &\multicolumn{1}{c|}{\textbf{rank}}\\
-\hline
-0&0.45&30.6& 1.00& 1.00\\
-1&0.46&28.9& 1.00& 1.00\\
-2&0.40&25.3& 1.00& 1.00\\
-3&0.46&32.2& 1.00& 1.00\\
-4&0.35&25.8& 1.00& 1.00\\
-5&0.40&37.1& 1.00& 1.00\\
-6&0.35&29.5& 1.00& 1.00\\
-7&0.39&32.0& 1.00& 1.00\\
-\hline
-\textbf{Avg.}&\textbf{0.40}&\textbf{30.1}&\textbf{ 1.00}&\textbf{ 1.00}\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_5}
-\normalsize
-\end{table*}
-
-\begin{table*}
-\scriptsize
-\caption{Summary}
-\centering
-\begin{tabular}{|c|ccc|ccc|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Measure}} &\multicolumn{3}{c|}{\textbf{\% / mm}} &\multicolumn{3}{c|}{\textbf{score}} \\
-\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} &\multicolumn{1}{c|}{\textbf{min.}} &\multicolumn{1}{c|}{\textbf{max.}} &\multicolumn{1}{c|}{\textbf{avg.}} \\
-\hline
-OV&13.9\%&100.0\%&84.4\%& 9.0&100.0&57.8\\
-OF& 9.6\%&100.0\%&73.8\%& 4.8&100.0&54.2\\
-OT&13.9\%&100.0\%&84.9\%& 9.0&100.0&59.4\\
-AI&0.27 mm&0.52 mm&0.40 mm&22.5&43.1&30.1\\
-\hline
-\end{tabular}
-\vspace{-0.3cm}
-\label{tb:tb_4_6}
-\normalsize
-\end{table*}
-
-METER TABLA DE MFLUX VS GULSUN
-
-\subsection{Experiment III: MFlux in MICCAI2012 Challenge}
-
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=4.0in]{./Figures/cpr_lkeb.png}
+		\includegraphics[width=4.0in]{./Figures/cpr_gt.png}
+		\includegraphics[width=4.0in]{./Figures/cpr_mflux.png}
+	\caption[Centerline Comparison]{Centerline visual assesment between: \textit{Top}, MICCAI 2012 Reference. \textit{Middle}, G \& T axe. \textit{Bottom}, MFlux axe.}
+	\label{fig:exp3_cpr}
+\end{figure}
 
 \section{Supervised Learning Experiments in Lesion Detection}
 
-
-
 \subsection{Experiment I: RUSBoost in vessel hyphotesis}
+
 \subsection{Experiment II: RUSBoost in segment hyphotesis}
 
 \subsection{Experiment III: RUSBoost VS Random Forest}
-%\section{Results}
-\section{Evaluation Measures}
-
-%\subsection{Experiment I: MICCAI2008}
-
-
 

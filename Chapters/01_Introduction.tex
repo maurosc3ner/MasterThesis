@@ -51,10 +51,7 @@ In heart disease, multiple CAD systems has been designed aiming to detect and qu
 \subsection{Evaluation of CAD systems}
 
 Assesment can be very challenging and is considered a pinnacle of the computer-aided diagnosis and one of the most studied areas in medical image analysis. Quantitative measures (Sensitivity and specificity) are only one way in the CAD systems evaluation spectrum \citep{Ginneken2011}. Sensitivity is determined by the percentage of positive cases well detected and placed by the CAD system. The number of false CAD marks per normal image or case is commonly used for specificity \citep{Castellino2005}. These measurements can be obtained by observing the performance of a CAD system on a set of ‘truth’ cases. The ground truth cases are generally established between multiple radiologist agreedment, adding inter-observer variation to the data. For instance, stand alone sensitivity and specificity measurements are not enough to quantify algorithm performance, even, it becomes more difficult to prove a clinically relevant improvement by a certain method. 
-
-Initiatives like the grand challenges in medical image analysis\footnote{Challenges objectives, rules, and results can be visited in \href{http://www.grand-challenge.org}{http://www.grand-challenge.org}.} address the evaluation challenge in medical imaging. It aims to create standard evaluation frameworks (tools and datasets) to compare proposed algorithms with state of the art methods \citep{Hameeteman2011, Schaap2009} , but, it is still an open discussion.
-
-FALTA CITAR A KIRISLI EN MICCAI2012
+Initiatives like the grand challenges in medical image analysis\footnote{Challenges objectives, rules, and results can be visited in \href{http://www.grand-challenge.org}{http://www.grand-challenge.org}.} address the evaluation challenge in medical imaging. It aims to create standard evaluation frameworks (tools and datasets) to compare proposed algorithms with state of the art methods \citep{Hameeteman2011, Schaap2009, Kirisli2013} , but, it is still an open discussion.
 
 \subsection{Arteriography}
 
@@ -85,7 +82,6 @@ Computed tomography angiography (CTA) is a non-invasive technique that consists 
 
 Even if these new technologies improve the quality of the diagnosis and reduce the risks of invasive procedures, the amount of radiation used to obtain these images is considerably higher compared to the conventional methods. Moreover, the elevated quantity of data to evaluate due to 3D captures leads to other on-going challenges to detect clinically relevant problems.
 
-
 \section{Main Challenges and Workflow}
 %
 Despite the possibility to improve the study of arteries thanks to high 3D resolution obtained by CTA, new difficulties appear from the image processing point of view. The following list proposed by Lesage \citep{Lesage2009Thesis} summarizes the main problems in this research area:
@@ -100,7 +96,6 @@ Despite the possibility to improve the study of arteries thanks to high 3D resol
 
 \begin{figure}[htbp]
 	\centering
-		%\includegraphics[width=3.0in]{./Figures/RadiusEstimation.png}
 		\includegraphics[width=0.9\textwidth]{./Figures/Workflow.png}
 	\caption[Workflow for coronary arteries analysis.]{Workflow for coronary arteries analysis.}
 	\label{fig:Workflow}
