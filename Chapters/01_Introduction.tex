@@ -48,14 +48,14 @@ In heart disease, multiple CAD systems has been designed aiming to detect and qu
 	\label{fig:cad_wf}
 \end{figure}
 
-\subsection{Evaluation of CAD systems}
+\subsection{Evaluation of CAD Systems}
 
 Assesment can be very challenging and is considered a pinnacle of the computer-aided diagnosis and one of the most studied areas in medical image analysis. Quantitative measures (Sensitivity and specificity) are only one way in the CAD systems evaluation spectrum \citep{Ginneken2011}. Sensitivity is determined by the percentage of positive cases well detected and placed by the CAD system. The number of false CAD marks per normal image or case is commonly used for specificity \citep{Castellino2005}. These measurements can be obtained by observing the performance of a CAD system on a set of ‘truth’ cases. The ground truth cases are generally established between multiple radiologist agreedment, adding inter-observer variation to the data. For instance, stand alone sensitivity and specificity measurements are not enough to quantify algorithm performance, even, it becomes more difficult to prove a clinically relevant improvement by a certain method. 
 Initiatives like the grand challenges in medical image analysis\footnote{Challenges objectives, rules, and results can be visited in \href{http://www.grand-challenge.org}{http://www.grand-challenge.org}.} address the evaluation challenge in medical imaging. It aims to create standard evaluation frameworks (tools and datasets) to compare proposed algorithms with state of the art methods \citep{Hameeteman2011, Schaap2009, Kirisli2013} , but, it is still an open discussion.
 
-\subsection{Arteriography}
+\subsection{Conventional Coronary Angiography}
 
-Conventional coronary angiography (CCA) is the standard procedure to diagnose CVDs. In summary, a catheter is inserted through the femoral artery or the hand, then contrast agent is injected into the coronary arteries making them visible to X-ray imaging. The image (angiogram) allows the radiologist detect possible vessel narrowing or plaque formations. However, this method is very invasive requiring high expertise to avoid complications (damages to internal arteries, alterations in pulse, etc.), in addition, it requires a continuous flow of dose radiation and contrast agent to the patient to perform the diagnose.
+Conventional coronary angiography (CCA) is the gold standard procedure to diagnose CVDs. In summary, a catheter is inserted through the femoral artery or the hand, then contrast agent is injected into the coronary arteries making them visible to X-ray imaging. The image (angiogram) allows the radiologist detect possible vessel narrowing or plaque formations. However, this method is very invasive requiring high expertise to avoid complications (damages to internal arteries, alterations in pulse, etc.), in addition, it requires a continuous flow of dose radiation and contrast agent to the patient to perform the diagnose.
 
 \begin{figure}[htbp]
 	\centering
@@ -66,21 +66,15 @@ Conventional coronary angiography (CCA) is the standard procedure to diagnose CV
 
 \subsection{Computed Tomography Angiography }
 
-A computerized tomography (CT) coronary angiogram is an imaging test to look at the arteries that supply your heart muscle with blood. Unlike a traditional coronary angiogram, CT angiograms don't use a catheter threaded through your blood vessels to your heart. Instead, a coronary CT angiogram relies on a powerful X-ray machine to produce images of your heart and heart vessels. CT angiograms don't require the recovery time needed with traditional angiograms. Coronary CT angiograms are becoming a common option for people with a variety of heart conditions.
-
-CT angiograms will expose you to a small amount of radiation. If you have known coronary artery disease, a traditional coronary angiogram may be a better option, since you can also receive treatment for your artery blockages during a traditional coronary angiogram.
-
+A computerized tomography (CT) coronary angiogram is an image modality to study the coronary arteries of the heart muscle with blood. Unlike a traditional coronary angiogram, CT angiograms don't use a catheter threaded through the coronary vessels. Instead, a coronary CT angiogram relies on intravenously injected iodine-based contrast fluid to highlight the coronary lumen. Then, a powerful X-ray (source and detector array) machine rotate around the patient 
+(See \ref{fig:ct_eq}). Yielding a detailed 3D human heart picture from the X-ray attenuation measured. Although CCA has better image resolution, its low but non-negligible risk of procedure due to its invasive nature [CITAR 189 Schaap] is always a drawback. Therefore, new CT angiograms (64-slice) can be a better choice and it is expected to allow advanced computer-aided diagnosis like lumen morphology, reliable stenosis grading among others in the upcoming years.
 
 \begin{figure}[htbp]
 	\centering
-		\includegraphics[width=0.6\textwidth]{./Figures/ct_equipment.jpg}
+		\includegraphics[width=0.5\textwidth]{./Figures/ct_equipment.jpg}
 	\caption[Computed tomography equipment]{Computed tomography equipment (source: \href{http://www.radiologyinfo.org/}{RadiologyInfo.org}).}
 	\label{fig:ct_eq}
 \end{figure}
-
-Computed tomography angiography (CTA) is a non-invasive technique that consists of 3D acquisitions of the area of study, enhancing arteries by using a contrast medium. The high resolution of modern scanners (64-slice CT scanner can achieve a resolution of $0.3 \times 0.3 \times 0.4${\,}mm$^3$ per voxel) permits not only to make an approximation of the lumen volume, but also to locate and quantify soft and calcified plaques. Calcified lesions can be spotted as small, bright regions while soft plaques are usually lesions with lower intensity values than the artery lumen. The most common methods to study and visualize these images are multi-planar reformation (MPR), curved planar reformation (CPR), and 3D rendering techniques such as volume rendering or maximum intensity projections. Both MPR and CPR correspond to a set of 2D slices extracted from the original image: sagital, coronal, and axial views in the case of MPR, and a set of continuous slices, orthogonal to the axis tangent at each point, in the case of CPR (Figure \ref{fig:CPRWidget} \footnote{This visualization results make part of the creaCoro project (\href{http://www.creatis.insa-lyon.fr/site/en/CreaCoro}{http://www.creatis.insa-lyon.fr/site/en/CreaCoro}).}). A more detailed revision about these techniques, their advantages and disadvantages can be found in \citep{Wang2011Thesis}.
-
-Even if these new technologies improve the quality of the diagnosis and reduce the risks of invasive procedures, the amount of radiation used to obtain these images is considerably higher compared to the conventional methods. Moreover, the elevated quantity of data to evaluate due to 3D captures leads to other on-going challenges to detect clinically relevant problems.
 
 \section{Main Challenges and Workflow}
 %
