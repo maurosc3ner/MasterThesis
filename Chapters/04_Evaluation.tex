@@ -1,18 +1,31 @@
-\chapter{Evaluation}
-%
+\chapter{Evaluation}\label{eval:eval}
 
 \section{Introduction}
-%In image processing field and computer vision, segmentation consists in partitioning an image by means of the differences between an object of interest and the background. It is still considered a challenging task that depends on the image properties and its specific context. Vessel segmentation is mainly composed by the extraction of the vascular lumen which conserves a tubular shape (linear in 2D images) in normal cases and its an important step for posterior visualization techniques and pathology quantification. However, numerous complications appear caused by changes in vessels sizes and curvatures, inter- and intra-patient variability, proximity to similar surrounding structures, motion and acquisition artifacts, and presence of pathologies. Due to these difficulties, simple segmentation methods does not obtain an explicit and generic solution that covers the most part of the cases.
 
-%Many recent advanced studies has focused on this problematic, specially in coronary arteries~\citep{Lesage2009Thesis, Schaap2010Thesis, Wang2011Thesis, Zuluaga2011Thesis}. Additionally, image processing challenges and reviews try to establish a general framework to compare methods and results obtained by different research groups. While some surveys presented classifications focusing on the algorithmic details, which do not facilitate the comparisons~\citep{Kirbas2004}, a more recent survey in 3D vessel segmentation~\citep{Lesage2009b} proposed a synthetic categorization based on three different criteria: 1) \textit{a priori} knowledge about vessel geometry and appearance models, 2) definition and use of features that describe vascular lumen, and 3) schemes that have been proposed to perform lumen segmentation. The latter category can be roughly separated in two groups: 3a)algorithms requiring a previously extracted centerline (axis) and 3b) methods running in one pass~\citep{Schaap2011}.
 
 %This chapter will be mainly focuses on the most recent works in coronaries, specially the ones falling in the 3a group. Various axis extraction methods have been evaluated in~\citep{Metz2008} and demonstrated a high accuracy compared to reference axes. For this reason, even if it is still a hard task in terms of image processing, the results confirm the current feasibility of the assumption and the availability of a correct centerline for posterior processing tasks. In most of the cases, centerlines are also needed for posterior processing task such as stenosis detection and quantification.
 
-\section{Materials}
+\section{Materials}\label{eval:Materials}
  
 The datasets were obtained from the publicly available Rotterdam Coronary Artery Algorithm Evaluation Framework (http://coronary.bigr.nl/). A total of twenty-six multi-center multi-vendor datasets were used for this study. Eight datasets from centerline extraction challenge, and the rest of them from the stenoses challenge. 
+\begin{table*}
+\scriptsize
+\caption{Image quality of the CAT08 datasets and vessels}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{Image quality} &\multicolumn{1}{c|}{\textbf{Poor}} &\multicolumn{1}{c|}{\textbf{Moderate}} &\multicolumn{1}{c|}{\textbf{Good}}&\multicolumn{1}{c|}{\textbf{Total}}\\
+\hline
+\# of datasets&2 &3&3 &8\\
+\# of vessels&8 &12&12 &32\\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:tb_4_5}
+\normalsize
+\end{table*}
 
-METER TABLA DE RESUMEN DE DATASETS DE CAT
+
 
 For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Schaap2009} and Kirişli et al. ~\citep{Kirisli2013} articles, or to the framework website.
 

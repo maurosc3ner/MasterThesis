@@ -13,7 +13,7 @@ Due to the drawbacks above mentioned, a typical direction lead us to combine bot
 
 Coronary lesions have no specific shape, size or location along the centerline. The selected sampling pattern should therefore be invariant to such changes. [3]
 
-The detection and quantification of vascular pathologies continue to be a tedious work for physicians who have to explore a vast amount of data using different visualization schemes based on advanced post-processing techniques. Recently, a family of methods that has made use of machine learning techniques has been proposed to perform this detection automatically. In addition, small amount of illness labeled data versus no illness data, make this problem enough suitable to an imbalanced data approach. Mittal et al. [CITAR A MITTAL] had showed that a synthetic interpolation of lesion slices to balance the dataset in conjunction with a 3D sampling pattern gives good results in calcified and non-calcified plaques. Zuluaga et al. [CITAR ZULUAGA] adress it from the medical diagnosis perspective, formuling as a density level detection problem with no labeled data available but with a 2D intensity metric. Other aproach from the same authors [9] has took into consideration only positive and unlabeled slices in semi-supervised way. Taking into account all the things above, this problem is suitable for an imbalanced data formulation.
+The detection and quantification of vascular pathologies continue to be a tedious work for physicians who have to explore a vast amount of data using different visualization schemes based on advanced post-processing techniques. Recently, a family of methods that has made use of machine learning techniques has been proposed to perform this detection automatically. In addition, small amount of illness labeled data versus no illness data, make this problem enough suitable to an imbalanced data approach. Mittal et al. [CITAR A MITTAL] had showed that a synthetic interpolation of lesion slices to balance the dataset in conjunction with a 3D sampling pattern gives good results in calcified and non-calcified plaques. Zuluaga et al. [CITAR ZULUAGA] adress it from the semi-supervised learning perspective, formuling as a density level detection problem with no labeled data available but with a 2D intensity metric. Other aproach from the same authors [9] has took into consideration only positive and unlabeled slices in semi-supervised way. Taking into account all the things above, this problem is suitable for an imbalanced data formulation.
 
 
 
@@ -71,6 +71,9 @@ Pre-processing strategies
 In pre-processing strategies, data sampling balances the class distribution in the training data by either adding examples to the minority class (oversampling) [4][5] or removing examples from the majority class (undersampling). Both undersampling and oversampling have their benefits and drawbacks. The main drawback associated with undersampling is the loss of information that comes with deleting examples from the training data. On the other hand, oversampling results in no lost information but it can lead to overfitting due to the duplicated data.
 
 \subsection{Supervised methods}
+
+
+As an ideal case, we expect that lesions occur next to bifurcations, but, atherosclerosis happens everywhere there is a vessel. Therefore, training a learning algorithm with our recent first hypothesis could lead us to an overfitting scenario. Mittal et al. [1] and Zuluaga et al. [2] evidence problems at vessel bifurcartions. Mittal reduce its vessel scope to the three main vessels (RCA, LAD, LCX), this will avoid lesions repetition at the training stage suppressing the overfiting.
 
 \subsection{RUSBoost: Hybrid}
 
