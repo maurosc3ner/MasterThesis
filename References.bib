@@ -3,6 +3,41 @@
 
 %% INTRODUCTION SECTION
 
+@misc{Richards1959, 
+	author={Richards, F.J.},
+	title={A flexible growth function for empirical use}, 
+	DOI={10.1093/jxb/10.2.290}, 
+	journal={J. Exp. Bot.},  
+	year={1959}
+}
+
+@INPROCEEDINGS{Kanitsar2002,
+    author = {Armin Kanitsar and Dominik Fleischmann and Rainer Wegenkittl and Petr Felkel and Meister Eduard Gröller},
+    title = {CPR - Curved Planar Reformation},
+    booktitle = {Visualization'02. IEEE},
+    year = {2002},
+    pages = {37--44}
+}
+
+@ARTICLE{Cademartiri2007,
+    author = {Cademartiri, Filippo and La Grutta, Ludovico and Palumbo, Alessandro and Malagutti, Patrizia and Pugliese, Francesca and Meijboom, W. Bob and Baks, Timo and Mollet, Nico R. and Bruining, Nico and Hamers, Ronald and de Feyter, Pim J.},
+    doi = {10.2459/01.jcm.0000260820.40145.a8},
+    issn = {1558-2027},
+    journal = {Journal of cardiovascular medicine (Hagerstown, Md.)},
+    keywords = {cardiac, coronary, ct, mr, vessel},
+    month = mar,
+    number = {3},
+    pages = {129--137},
+    pmid = {17312429},
+    posted-at = {2010-03-15 00:33:34},
+    priority = {4},
+    title = {{Non-invasive visualization of coronary atherosclerosis: state-of-art.}},
+    url = {http://dx.doi.org/10.2459/01.jcm.0000260820.40145.a8},
+    volume = {8},
+    year = {2007},
+    abstract = {Coronary artery disease remains the leading cause of death in the Western world. Non-invasive coronary artery imaging challenges any diagnostic modality because the coronary arteries are small and tortuous, whereas cardiac contraction and respiration cause motion artifacts. Therefore, non-invasive coronary imaging requires high spatial and temporal resolution. This review discusses the feasible applications in coronary imaging of magnetic resonance imaging and multi-slice computed tomography (MSCT), which are currently the only non-invasive diagnostic modalities for direct coronary atherosclerosis imaging. Particular attention and focus is devoted to the potential indications and clinical impact of MSCT due to its fast development and the robust results recently reported. MSCT of the coronary arteries is a promising imaging modality for the assessment of the coronary lumen and wall.}
+}
+
 @ARTICLE{Kirisli2013,
   author = {H.A. Kirisli and M. Schaap and C.T. Metz and A.S. Dharampal and B.W. Meijboom
      and S.L. Papadopoulou and A. Dedic and K. Nieman and M.A. de Graaf and M.F.L.
@@ -243,8 +278,7 @@
   priority = {2},
   review = {Machine learning para clasificar imagenes dentro de un gran conjunto
 	de casos.
-	
-	No tiene que ver con arterias ni imagenes medicas
+	No tiene que ver con arterias ni imagenes medicas}
 }
 
 @article {Carrillo2007,
@@ -1245,6 +1279,49 @@
   review = {Publicacion del concurso del 2008 (ejes) en Insight Journal}
 }
 
+@ARTICLE{Metz2009,
+  author = {C.T. Metz and M. Schaap and A.C. Weustink and N.R.A. Mollet and T. van Walsum
+     and W.J. Niessen},
+  journal = {Medical Physics},
+  year = {2009},
+  number = {12},
+  pages = {5568-5579 },
+  title = {Coronary centerline extraction from CT coronary angiography images using a
+     minimum cost path approach},
+  volume = {36},
+  abstract = {Purpose: The application and large-scale evaluation of minimum cost path
+     approaches for coronary centerline extraction from computed tomography coronary
+     angiography (CTCA) data and the development and evaluation of a novel method to
+     reduce the user-interaction time.Methods: A semiautomatic method based on
+     a minimum cost path approach is evaluated for two different cost functions. The
+     first cost function is based on a frequently used vesselness measure and
+     intensity information, and the second is a recently proposed cost function based
+     on region statistics. User interaction is minimized to one or two mouse clicks
+     distally in the coronary artery. The starting point for the minimum cost path
+     search is automatically determined using a newly developed method that finds a
+     point in the center of the aorta in one of the axial slices. This step ensures
+     that all computationally expensive parts of the algorithm can be
+     precomputed.Results: The performance of the aorta localization procedure
+     was demonstrated by a success rate of 100% in 75 images. The success rate and
+     accuracy of centerline extraction was quantitatively evaluated on 48 coronary
+     arteries in 12 images by comparing extracted centerlines with a manually
+     annotated reference standard. The method was able to extract 88% and 47% of the
+     vessel centerlines correctly using the vesselness/intensity and region
+     statistics cost function, respectively. For only the proximal part of the
+     vessels these values were 97% and 86%, respectively. Accuracy of centerline
+     extraction, defined as the average distance from correctly automatically
+     extracted parts of the centerline to the reference standard, was 0.64 mm for the
+     vesselness/intensity and 0.51 mm for the region statistics cost function. The
+     interobserver variability was 99% for the success rate measure and 0.42 mm for
+     the accuracy measure. Qualitative evaluation using the best performing cost
+     function resulted in successful centerline extraction for 233 out of the 252
+     coronaries (92%) in 63 additional CTCA images.Conclusions: The presented
+     results, in combination with minimal user interaction and low computation time,
+     show that minimum cost path approaches can effectively be applied as a
+     preprocessing step for subsequent analysis in clinical practice and biomedical
+     research.}
+}
+
 @INPROCEEDINGS{Mittal2010,
   author = {Mittal, Sushil and Zheng, Yefeng and Georgescu, Bogdan and Vega-Higuera,
 	Fernando and Zhou, Shaohua Kevin and Meer, Peter and Comaniciu, Dorin},
@@ -1465,8 +1542,7 @@
 
 @INPROCEEDINGS{Renard2008,
   author = {Renard, F. and Yang, Yongyi},
-  title = {{Image analysis for detection of coronary artery soft plaques in {MDCT}
-	images}},
+  title = {{Image analysis for detection of coronary artery soft plaques in {MDCT} images}},
   booktitle = {IEEE International Symposium on Biomedical Imaging: from Nano to
 	Macro},
   year = {2008},
@@ -1524,22 +1600,6 @@
   doi = {10.1016/S1361-8415(98)80009-1},
   issn = {1361-8415},
   review = {Sato vesselness function}
-}
-
-@ARTICLE{Schaap2009,
-  author = {M. Schaap and C.T. Metz and T. van Walsum and A.G. van der Giessen and A.C.
-     Weustink and N.R.A. Mollet and C. Bauer and H. Bogunović and C. Castro and X.
-     Deng and E. Dikici and T. O'Donnell and M. Frenay and O. Friman and M.
-     Hernández Hoyos and P.H. Kitslaar and K. Krissian and C. Kühnel and M. A.
-     Luengo-Oroz and M. Orkisz and Ö Smedby and M. Styner and A. Szymczak and H. Tek
-     and C. Wang and S. K. Warfield and S. Zambal and Y. Zhang and G. P. Krestin and
-     W.J. Niessen},
-  journal = {Medical Image Analysis},
-  year = {2009},
-  pages = {701-714},
-  title = {Standardized Evaluation Methodology and Reference Database for Evaluating
-     Coronary Artery Centerline Extraction Algorithms},
-  volume = {13/5}     
 }
 
 @PHDTHESIS{Schaap2010Thesis,
