@@ -3,11 +3,11 @@
 
 \section{Introduction}
 %
-Efficiently obtaining a reliable coronary artery centerline from computed tomography angiography data is relevant in clinical practice. From the computer aided dignosis point of view, many vessel visualization techniques have been proposed to review CTA data[CADEMARTIRI et al.].  These visualizations can be used in quantitative analysis and diagnosis, surgical planning procedure (stent placement), among other things. Visualizations such multi-planar reformatting (MPR), and curved planar reformatting [Kanitsar et al.](CPR) use the central lumen line as a source, these techniques have succesfully been used as a starting point for lumen segmentation, stenosis grading, quantification and more. Therefore, having these centerlines is a prerequisite for the automatic lesion detection task.
-In recent years, a variety of techniques have been proposed and evaluated succesfully [CITAR CAT08]. All of them, extract the coronary vessel centerlines from CTA images, and they are grouped according to its level of user interaction: automatic extraction, minimum user-interaction and interactive extraction methods.
-This method finds a coronary vessel centerline interactively. Two seed points are manually placed by the radiologist and the path is automatically extracted using a minimum cost path approach (Dijkstra’s algorithm). The cost to travel through a voxel is based on a generalized logistic function applied to the non-linear flux vesselness response [CITAR A LESAGE] of the CTA image. Selective vessel radiuses can be provided to get rid off erroneously connected structures such coronary veins. Results shown robust and accurate centerline extraction in multi-vendor datasets.
+Efficiently obtaining a reliable coronary artery centerline from computed tomography angiography data is relevant in clinical practice. From the computer aided dignosis point of view, many vessel visualization techniques have been proposed to review CTA data \citep{Cademartiri2007}.  These visualizations can be used in quantitative analysis and diagnosis, surgical planning procedure (stent placement), among other things. Visualizations such multi-planar reformatting (MPR), and curved planar reformatting \citep{Kanitsar2002} (CPR) use the central lumen line as a source, these techniques have succesfully been used as a starting point for lumen segmentation, stenosis grading, quantification and more. Therefore, having these centerlines is a prerequisite for the automatic lesion detection task.
+In recent years, a variety of techniques have been proposed and evaluated succesfully \citep{Schaap2009}. All of them, extract the coronary vessel centerlines from CTA images, and they are grouped according to its level of user interaction: automatic extraction, minimum user-interaction and interactive extraction methods.
+This method finds a coronary vessel centerline interactively. Two seed points are manually placed by the radiologist and the path is automatically extracted using a minimum cost path approach (Dijkstra’s algorithm). The cost to travel through a voxel is based on a generalized logistic function applied to the non-linear flux vesselness response \citep{Lesage2009a}  of the CTA image. Selective vessel radiuses can be provided to get rid off erroneously connected structures such coronary veins. Results shown robust and accurate centerline extraction in multi-vendor datasets.
 
-This chapter is organized as follows... 
+This chapter is organized as follows: Details about the minimum cost path can be found in section \ref{cent:dijk}. Section \ref{cent:flu} gives a description of the vesselness filter, in section \ref{cent:cost} the cost function is defined. Finally, sections \ref{cent:bezi} and \ref{cent:opt} present details about accurate centerline extraction.
 
 \section{Related Work}
 
@@ -17,54 +17,139 @@ more than twenty methods
 [CITAR todos los de CAT08 categoria 3]  (more than one point per vessel as input)
 
 
+\section{Dijkstra}\label{cent:dijk}
 
-\section{Flux and MFlux}
+Before going in depth about Dijkstra's algorithm \citep{Dijkstra1959} let's give an introduction about
+directed-weighted graph that are the baseline of Dijkstra.
+Directed graph (also known as digraph) can be defined as an ordered pair $G:= (V,A)$ with $V$ is a set, whose elements are called vertices or nodes and A is a set of ordered pairs of vertices, called arcs, or arrows (See Fig. \ref{fig:dijk1}). 
 
-Flux is a gradient-based vesselness measure that exploits the orientation of gradient vectors by computing the gradient flux through the surface of an object. The flux F(S) through a surface S is defined as:
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/dijk1.png}
+	\caption[Weighted Directed Graph]{A weighted directed graph.
+	 (source: OSU CSE 680 Lecture notes).}
+	\label{fig:dijk1}
+\end{figure}
 
-\section{Dijkstra}
+Given the graph above, suppose we wish to find the shortest path from vertex 1 to vertex 13. After some consideration, Dijkstra's algorithm determine that the shortest path is as follows, with length 14 (See Fig. \ref{fig:dijk2}). 
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/dijk2.png}
+	\caption[Shortest Path of a Directed Graph]{Shortest path from \textit{G}. (source: OSU CSE 680 Lecture notes).}
+	\label{fig:dijk2}
+\end{figure}
 
-\section{Cost Function}
+Dijkstra's algorithm (also known as the single-source shortest path) works by visiting vertices in the graph starting with the object’s starting point. It then repeatedly examines the closest unverified vertex, adding its vertices to the set of vertices to be examined. it expands outwards from the starting point until it reaches the end point. This method is guaranteed to find a shortest path from the starting point to the end point, as long as all the weights in the graph have a positive cost.
 
-In order to apply a minimal cost approach, a cost function is applied in every Flux vesselness voxel. The main idea is to give the minimum cost to high vessel responses and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
+Once, we have introduced Dijkstra, two questions arise (See Fig. \ref{fig:dijk3_vs_dijk4}): could we apply Dijkstra to coronary vessels? If so, how?.
+To answer these questions, an adaptation of the minimum cost path extraction method \citep{Metz2009} is presented.
+For each branch of the coronary artery tree, we divide our task in three steps: 
+\begin{itemize}
+	\item Vessel enhancement pre-processing (Vesselness filter).
+	\item Placement of the artery's start and end point.
+	\item Vesselness conversion to cost.
+\end{itemize}
 
-The Richard's curve [RICHARDS CURVE CITATION] or generalized logistic function is a widely-used and flexible sigmoid function for growth modeling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{./Figures/dijk3.png}
+		\includegraphics[width=0.6\textwidth]{./Figures/dijk4.png}
+	\caption[Coronary Artery Segment as a Cost Path]{Coronary artery segment as a cost path.}
+	\label{fig:dijk3_vs_dijk4}
+\end{figure}
+
+First, we enhance the coronary structures with a vesselness filter, this enhancement allows us to avoid surrounding structures like heart chambers or coronary veins. Due to its computational time (\~8minutes), the vesselness pre-processing is done at the begining and just one time over the entire image, further improvement can be done into this direction in terms of implementation.
+Next, seed points are manually placed in the CTA image. Finally, the vesselness filter response is translated to a correct cost in order to keep the dijkstra expansion within the vessel, that is our path of interest.
+
+\section{Vessel Enhancement: Flux}\label{cent:flu}
+
+Firstly, introduced by [CITAR VASILEVSKY] as a geometric feature and later adapted to coronary vessels by \citep{Lesage2009a}. Flux is a gradient-based vesselness measure that exploits the orientation of gradient vectors by computing the gradient flux through the surface of an object. Lesage formulated Flux as the evaluation of the inward gradient flux through a 3D circular cross-section (See Fig. \ref{fig:fl_sch}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.4\textwidth]{./Figures/flux_scheme.png}
+	\caption[Flux Geometric Model]{Flux Geometric Model \citep{Lesage2009a}.}
+	\label{fig:fl_sch}
+\end{figure}
+
+A pre-regularized gradient is computed using an isotropic Gaussian smoothing \citep{Deriche1993}. Next, an  equi-angular discretization of the cross-section is done ($N$ points $x_i$). Finally, the local cross-sectional flux contribution is computed \ref{eq:eq_flux}.
+\begin{equation}
+\label{eq:eq_flux}
+Flux( p, r_{Flux}, d) = \cfrac{1}{N} \sum\limits_{i=1}^N \langle \nabla I(x_{i}),u_{i} \rangle 
+\end{equation}
+Where $\nabla I(x_{i})$ is the gradient vector at point $x_i$ and $u_{i}=\tfrac{p-x_i}{\vert p-x_i\vert} $ the inward radial direction (See Fig. \ref{fig:fl_sch}). Unfortunately, it is prune to step-response, therefore, we opt by using the non-linear version (See Eq. \ref{eq:eq_mflux}). It is better suited for step-edge responses (See Fig. \ref{fig:fl_comp}).
+\begin{equation}
+\label{eq:eq_mflux}
+MFlux( p, r_{Flux}, d) = \cfrac{2}{N} \sum\limits_{i=1}^{\tfrac{N}{2}} min(\langle \nabla I(x_{i}),u_{i} \rangle,\langle \nabla I(x_{i}^{\pi}),u_{i}^{\pi} \rangle )
+\end{equation}
+
+In addition, the current implementation takes into account selective radius, another key aspect to avoid circular structures such heart chambers or coronary veins (See Fig. \ref{fig:fl1_vs_fl2}).
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/flux_comp.png}
+	\caption[Vesselness Comparison]{2D Vesselness performance with nearby structures \citep{Lesage2009Thesis}.}
+	\label{fig:fl_comp}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.4\textwidth]{./Figures/flux1.png}
+		\includegraphics[width=0.4\textwidth]{./Figures/flux2.png}
+	\caption[Coronary Flux Filter Enhancement]{Coronary flux filter enhancement example.}
+	\label{fig:fl1_vs_fl2}
+\end{figure}
+
+\section{Cost Function: A Parametric Inverse Sigmoid Function}\label{cent:cost}
+
+The cost to travel through a voxel is based on a generalized logistic function applied to the vesselness response (See Fig. \ref{fig:flux_resp}) of the CTA image. The main idea is to give the minimum cost to high vessel responses and vice versa. Therefore, the key task is to find a cost function that fits the flux image dynamic. Some traits of the flux image are: the maximum voxel value varies between CTA scans, low mean and high variance values are expected in flux images, amongst others. However, finding a capable function is always part of the succes of this approach.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/flux_resp.png}
+	\caption[MFlux Response]{MFlux Response.}
+	\label{fig:flux_resp}
+\end{figure}
+
+The Richard's curve \citep{Richards1959} or generalized logistic function is a widely-used and flexible sigmoid function for growth modeling, extending the well-known logistic curve. For this case, we start from the six-parameter version (See Eq. \ref{eq:eq_2_1}) that fits a wide range of S-shaped growth curves. 
 \begin{equation}
 \label{eq:eq_2_1}
 f\left( x;\delta,\beta,\gamma,\alpha,\mu,\nu\right) = \delta + \cfrac{\beta-\delta}{(1+\gamma e^{-\alpha(x-\mu)})^{1/\nu}}
 \end{equation}
 Where $\delta$ is the lower asymptote, $\beta$ is the upper asymptote, $\gamma$ is a variable which fixes the point of inflection, $\alpha$ is the growth rate; $\mu$ is the time of maximum growth and $\nu$ affects near which asymptote maximum growth occurs.
-From equation \ref{eq:eq_2_1}, Assuming that $\gamma$ and $\nu$ are constants equal to 1, we got:
+From equation \ref{eq:eq_2_1}, we assume that $\gamma$ and $\nu$ are constants equal to 1:
 \begin{equation}
 \label{eq:eq_2_2}
 f\left( x;\delta,\beta,\alpha,\mu\right) = \delta + \cfrac{\beta-\delta}{1+e^{-\alpha(x-\mu)}}
 \end{equation}
-Once we have the simplified equation \ref{eq:eq_2_2}, we make the following assumptions in order to fit the particular flux image characteristics.
+Once we have the simplified equation \ref{eq:eq_2_2}, we make the following assumptions in order to fit the particular flux image characteristics. First, the minimum and maximum cost ($Cmin$, $Cmax$) will penalize the Dijkstra's expansion (See Eq. \ref{eq:eq_2_3}). $\beta$ is the upper asymptote when the flux voxel value is minimum (See Eq. \ref{eq:eq_2_4}). Finally, $\mu$ is the multiplication between the mean volume vesselness response and a scalar $C$ (See Eq. \ref{eq:eq_2_5}). $C$ is related to the image intensity distribution.
 \begin{equation}
 \label{eq:eq_2_3}
 \delta = Cmin + Cmax
 \end{equation}
-Where $Cmin$ is the minimum cost, and $Cmax$ is the maximum cost to penalize the Dijkstra's algorithm. 
 \begin{equation}
 \label{eq:eq_2_4}
 \beta = Cmax
 \end{equation}
-Where $\beta$ is the upper asymptote when the flux voxel value is minimum.
 \begin{equation}
 \label{eq:eq_2_5}
 \mu = C \times mean(I_{Flux}) 
 \end{equation}
-We set $\mu$ as a multiplication between the mean volume vesselness response and a scalar $C$. $C$ is related to the radiuses evaluated.
-
 Finally, our cost function \ref{eq:eq_2_6} is in terms of Flux response and costs.
 \begin{equation}
 \label{eq:eq_2_6}
-f( I_{Flux};Cmin, Cmax, \alpha,\mu) == 2\times mean(I_{Flux}) 
+f( I_{Flux};Cmin, Cmax, \alpha,\mu) = Cmin + Cmax - \cfrac{Cmax}{1+e^{-\alpha(I_{Flux}-\mu)}}
 \end{equation}
 
-\section{Dealing with Bifurcations: Bezier's Curve}
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{./Figures/invsig_cost.png}
+	\caption[Cost Function]{Cost Modeling of flux images.}
+	\label{fig:inv_cost}
+\end{figure}
 
-As the Dijkstra's extraction advances, some part of the coronary artery vessel may present multiple centerpoints due to a vessel division (bifurcation). In order to refine the centerline points into individual vessels. A B\'ezier's approximation [CITAR A BEZIER] is applied as a refinement step (post-processing) (Figure \ref{fig:sp_vs_bz}). 
+\section{Dealing with Bifurcations: Bezier's Curve}\label{cent:bezi}
+
+As the centerline extraction advances, some part of the coronary artery vessel may present multiple centerpoints due to a vessel division (bifurcation). In order to refine the centerline points into individual vessels. A curve approximation [B\'ezier's] is applied as a refinement step (post-processing) (Figure \ref{fig:sp_vs_bz}). 
 
 \begin{figure}[ht]
 	\centering
@@ -75,12 +160,22 @@ As the Dijkstra's extraction advances, some part of the coronary artery vessel m
 \end{figure}
 
 
-\section{Parameter optimization}
+\section{Parameter optimization}\label{cent:opt}
 
-Some parameter optimization can be done in the equation cost equation. The slope is always
+This section describes the optimization procedure for some important cost parameters.
+\textbf{Inverse Sigmoid Slope (}$\mathbf{\alpha}$\textbf{):} Figure \ref{fig:ves_op} presents a plot of the method performance (slalom effect) as a function of $\alpha$. In general, when using a lower alpha value ($<$1), ultra-fast extraction is achieved, compared to high alpha values (relaxed sigmoid slope). For instance, The accuracy is one of the aspect of our solution, therefore, precise axis extraction (voxel precision) is a mandatory. In most cases, an alpha value set to 5 is enough to have a fast an reliable axis extraction.
 
+\textbf{Mean (}$\mu$\textbf{):} The scalar $C$ (See Eq. \ref{eq:eq_2_5}) affects directly to the algorithm's success rate. Experimental results over problematic datasets shown a good success rate with an interval of $\left[1.5 ,5\right] $ for $C$.
 
-CITAS A BUSCAR Y AGREGAR
-F. Cademartiri, L. L. Grutta, A. Palumbo, P. Malagutti, F. Pugliese, W. B. Meijboom, T. Baks, N. R. Mollet, N. Bruining, R. Hamers, and P. J. de Feyter. Non-invasive vi- sualization of coronary atherosclerosis: state-of-art. Journal of Cardiovascular Medicine, 8(3):129–137, 2007.
+\textbf{Cmin \& Cmax:} To determine the best performing cost, an interval $\left[  10^{-8}, 10^{-3}\right]$ for \textit{Cmin} was used. For \textit{Cmax}, the order of magnitud was the same but using positive exponents.
 
-A.Kanitsar,D.Fleischmann,R.Wegenkittl,P.Felkel,andM.E.Gröller.CPR-Curved Planar Reformation. In Proceedings of IEEE Visualization, 2002.
+It should be noted that we cannot claim to have found the optimum parameter settings, since we did not perform a complete, exhaustive search on the parameter space (evaluating all possible combinations of $\alpha$, $\mu$, and costs). The results in Figure \ref{fig:ves_op} suggest that the parameters are near optimal for our set of data (See section \ref{eval:Materials}). Optimizing the cost parameters using another set of images may lead to different results.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/vessel_ref.png}
+		\includegraphics[width=0.5\textwidth]{./Figures/vessel_mflux_nop.png}
+		\includegraphics[width=0.5\textwidth]{./Figures/vessel_mflux_op.png}
+	\caption[Centerline Optimization]{Vessel Extraction Comparison: \textit{a)} Reference axis. \textit{b)} MFlux without optimization. \textit{c)} MFlux optimized.}
+	\label{fig:ves_op}
+\end{figure}
