@@ -1,16 +1,12 @@
-\chapter{Results}
-%
+\chapter{Results}\label{res:res}
 
 \section{Centerline Extraction Experiments}
 
-Both quantitative and qualitative evaluations were conducted to assess the performance of the method. The quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. The quantitative and qualitative evaluation measures used in this work are introduced in Section 2.5.4.
-
-
 \subsection{Experiment I: MFlux in CAT08 Challenge}
 
-Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results of the semi-automatic coronary centerline extraction on the CTA datasets submitted to the Web-based platform. The following average results were obtained. A 84.3\% overlap with expert human manual annotations was achieved, until the first failure (OF) 65.3\%, in clinically relevant segments (radius $>$ 1.5 mm, OT) 84.4\%. In terms of accuraccy within the vessel (AI) an average of 0.41 mm where obtained. Generally, the method gets a 9$^{th}$ position in the overlaping rank and 12$^{th}$ position for the accuraccy rank in comparison with the CAT08 methods. Visual inspection revealed that most extraction errors occurred at the start of the vessel and near to the ostium. 
+Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results of the semi-automatic coronary centerline extraction on the CTA datasets submitted to the Web-based platform. The following average results were obtained. 
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{MFlux average overlap per dataset}
 \centering
@@ -36,7 +32,7 @@ Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results
 \normalsize
 \end{table*}
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{MFlux average accuracy per dataset}
 \centering
@@ -62,7 +58,7 @@ Tables \ref{tb:tb_4_1},\ref{tb:tb_4_2} and \ref{tb:tb_4_3}  presents the results
 \normalsize
 \end{table*}
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{MFlux Summary}
 \centering
@@ -82,11 +78,54 @@ AI&0.28 mm&0.56 mm&0.41 mm&21.7&41.3&29.2\\
 \normalsize
 \end{table*}
 
-\subsection{Experiment II: MFlux VS G\&T (itkRGC)}
+A 84.3\% overlap with expert human manual annotations was achieved, until the first failure (OF) 65.3\%, in clinically relevant segments (radius $>$ 1.5 mm, OT) 84.4\%. In terms of accuraccy within the vessel (AI) an average of 0.41 mm where obtained. Generally, the method ranks ninth in the overlaping section and 12$^{th}$ for the accuraccy rank in comparison with the CAT08 methods. Visual inspection revealed that most extraction errors occurred at the start of the vessel and near to the ostium. 
 
-Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6} gives the results of Tek et al implementation (G\&T) on the same CTA datasets. Also, table \ref{tb:tb_4_7} resume the performance of both methods against the best and worst CAT08 methods.
+\subsection{Experiment II: MFlux in MICCAI2012 Challenge}
 
-\begin{table*}
+Since MICCAI12 does not provide the lumen radius annotations, only overlapping measures are taking into account in this section. Although, the experiment goal was the correct extraction in the problematic datasets. An overall good overlapping was achieved. This could be due to an improvement in the quality of images in the challenge.
+
+\begin{table*}[h]
+\scriptsize
+\caption{Dataset 05, vessel 0 (RCA) VS reference team KLEB (Manually Corrected)}
+\centering
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Methods}} &\multicolumn{2}{c|}{\textbf{OV}} &\multicolumn{2}{c|}{\textbf{OF}} &\multicolumn{2}{c|}{\textbf{OT}}\\
+\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}}\\
+\hline
+G\&T (itkRGC)&99.0 &99.0 &99.0 &99.0&99.0&99.0\\
+MFlux&98.67&74.83& 98.51&49.25& 98.50&71.64\\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:tb_4_7}
+\normalsize
+\end{table*}
+
+\begin{table*}[h]
+\scriptsize
+\caption{Dataset 01, vessel 4 (L-PDA) VS reference team KLEB (Manually Corrected)}
+\centering
+\begin{tabular}{|c|cc|cc|cc|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Methods}} &\multicolumn{2}{c|}{\textbf{OV}} &\multicolumn{2}{c|}{\textbf{OF}} &\multicolumn{2}{c|}{\textbf{OT}}\\
+\multicolumn{1}{|c|}{\textbf{}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}} &\multicolumn{1}{c|}{\textbf{\%}} &\multicolumn{1}{c|}{\textbf{score}}\\
+\hline
+G\&T (itkRGC)&100 &100&100 &100&100&100\\
+MFlux&100&100& 100&100&100&100\\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:tb_4_7}
+\normalsize
+\end{table*}
+	
+
+\subsection{Experiment III: MFlux VS G\&T (itkRGC)}
+
+Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6} give the results of G\&T implementation on the same CTA datasets. Also, table \ref{tb:tb_4_7} resume the performance of both methods against the best and worst CAT08 methods and the team results for this challenge.
+
+\begin{table*}[h]
 \scriptsize
 \caption{G\&T average overlap per dataset}
 \centering
@@ -112,7 +151,7 @@ Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6} gives the results of 
 \normalsize
 \end{table*}
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{G\&T average accuracy per dataset}
 \centering
@@ -138,7 +177,7 @@ Tables \ref{tb:tb_4_4},\ref{tb:tb_4_5} and \ref{tb:tb_4_6} gives the results of 
 \normalsize
 \end{table*}
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{G\&T Summary}
 \centering
@@ -158,9 +197,9 @@ AI&0.27 mm&0.52 mm&0.40 mm&22.5&43.1&30.1\\
 \normalsize
 \end{table*}
 
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
-\caption{Quantitative vesselness comparison using CAT08 framework}
+\caption{Quantitative methods comparison using CAT08 framework}
 \centering
 \begin{tabular}{|c|cc|cc|cc|cc|}
 \hline
@@ -179,14 +218,22 @@ Castro et al.&72.6 &38.9 &45.6 &27.3 &73.8 & 41.0 &0.67 &21.2\\
 \normalsize
 \end{table*}
 
-\subsection{Experiment III: MFlux in MICCAI2012 Challenge}
+Despite our limited comparison in terms of vesselness filters, our method is able to track centerline vessels with an accuracy comparable to the experts and with similar G\&T performance.
 
-only overlapping measures are taking into account due to 
+\section{Supervised Learning Experiment in Lesion Detection}
+
+Table \ref{tb:ml_res} shows the average results of our method and the others for stenosis dectection measures: sensitivity, specificity, positive predictive value, negative predictive value and accuracy. In general, our results are
+worse than the literature performance \citep{Mittal2010,Zuluaga2011a}(specificity $>$ 75\% on CTA). Therefore, the ability of our method to discriminate significant calcifications from non-significant ones remains  limited (66\%). Nevertheless, as compared to the non imbalanced options in the same dataset (AdaBoost M1 and Random Forest), our method leads the list in terms of specificity, over the testing set (See Fig \ref{fig:errcurve}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/289Final.png}
+	\caption[Classification Curve]{(\textit{Top}) Classification error curve.}
+	\label{fig:errcurve}
+\end{figure}
 
 
-\section{Supervised Learning Experiments in Lesion Detection}
-
-\begin{table*}
+\begin{table*}[h]
 \scriptsize
 \caption{Quantitative learning performance}
 \centering
@@ -200,15 +247,15 @@ Random Forest&99.19 &52.81 &96.68 &82.46 &96.06\\
 \hline
 \end{tabular}
 \vspace{-0.3cm}
-\label{tb:tb_4_8}
+\label{tb:ml_res}
 \normalsize
 \end{table*}
 
-
-\subsection{Experiment I: RUSBoost in vessel hyphotesis}
-\subsection{Experiment II: RUSBoost in segment hyphotesis}
-
-\subsection{Experiment III: RUSBoost VS Random Forest}
-
-
-
+An additional qualitative evaluation (See Fig \ref{fig:res_vis}) reveals that we detect the majority of lesions, but from the slice-based point view, we are highly penalized in terms of false negatives, since radiologists assume a bigger lesion size (affecting more consecutive slices). Future work in a multi-scale cylinder could give better results.
+ 
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/visual_lesions.png}
+	\caption[Visual Assesment in Lesion Detection]{Visual comparison between reference data (green=healthy, red=calcified) and results data (cyan curve peaks).}
+	\label{fig:res_vis}
+\end{figure}

@@ -1,0 +1,148 @@
+\chapter{Evaluation}\label{eval:eval}
+
+\section{Introduction}
+
+Both quantitative and qualitative evaluations were conducted to assess the performance of the methods.In the case of centerline extraction, the quantitative evaluation provides an objective evaluation of the method and enables comparison with previously published methods. However, comparison with results in literature should always be done with care, as results have been obtained on different data sets. A limitation of quantitative evaluation is that it requires a set of manually annotated structures, which is time consuming and not feasible for large numbers of 3D data. Therefore, we also conducted qualitative evaluations, as they can be performed in less time and hence on a larger number of data. Quantitative evaluation measures used in this work are introduced in the section below (\ref{eval:Measures}).
+
+\section{Materials}\label{eval:Materials}
+ 
+The datasets were obtained from the publicly available Rotterdam Coronary Artery Algorithm Evaluation Framework\footnote{Rotterdam Coronary Artery Algorithm Evaluation Framework \href{http://coronary.bigr.nl/}{http://coronary.bigr.nl/}.}. A total of twenty-six multi-center multi-vendor datasets were used for this study. 
+Experiments related to the centerline extraction methods use eight datasets (\textit{4 vessels}). Centerline points and lumen radius are provided. Three types of images are available to test the success rate of the methods (See table \ref{tb:eval_mat1}. Two problematic datasets of the MICCAI12 challenge are also tested. Voxel resolution in both sets was on average close to $0.3 \times 0.3 \times 0.4${\,}mm$^3$ and image dimensions of 512 x  512 x 400 voxels.
+
+\begin{table*}
+\scriptsize
+\caption{Image quality of the CAT08 datasets and vessels}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{Image quality} &\multicolumn{1}{c|}{\textbf{Poor}} &\multicolumn{1}{c|}{\textbf{Moderate}} &\multicolumn{1}{c|}{\textbf{Good}}&\multicolumn{1}{c|}{\textbf{Total}}\\
+\hline
+\# of datasets&2 &3&3 &8\\
+\# of vessels&8 &12&12 &32\\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:eval_mat1}
+\normalsize
+\end{table*}
+ 
+The remaining 16 datasets are used for the lesion detection assesment. Complete annotations about plaques (\textit{plaque type, location and percentage of occlusion}) are also given for each image. A vessel separation has been done avoiding the lesion repetition in each branch. The vessel summary is provided (See table \ref{tb:eval_mat2}).
+
+\begin{table*}
+\scriptsize
+\caption{Vessels summary}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{} &\multicolumn{1}{c|}{\textbf{Healthy}} &\multicolumn{1}{c|}{\textbf{Mixed or calcified}}\\
+\hline
+\# Training vessels &53 &27\\
+\# Testing &33&13\\
+\hline
+Total &86&40 \\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:eval_mat2}
+\normalsize
+\end{table*}
+
+For additional information about the image acquisition, data selection and reference standards, the reader may refer to ~\citep{Schaap2009} and Kirişli et al. ~\citep{Kirisli2013} articles, or to the framework website.
+
+\section{Evaluation Measures}\label{eval:Measures}
+
+\subsection{Centerline Extraction}
+Four different measures (\textit{three for overlapping and one for accuraccy assesment}) are used in this section. All of them are based on the terms defined by \citep{Schaap2009} (See Fig. \ref{fig:exp3_ms}).
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=1.0\textwidth]{./Figures/eval_ms.png}
+	\caption[Coronary Centerline Evaluation Measures CAT08]{Evaluation Measures used at CAT08 (source: \citep{Schaap2009}).}
+	\label{fig:exp3_ms}
+\end{figure}
+
+From the overlap point of view, overlap \textbf{(OV)} represents the ability to track the complete vessel annotated by the human observers; overlap until first error \textbf{(OF)} determines how much of a coronary artery has been extracted before making the first error; Finally, overlap with the clinically relevant part of the vessel \textbf{(OT)} gives an indication how the method is able to track a clinical relevant vessel section. An algorithm score of 100 points is a perfect match between us and the reference, a score equal to 0 is a total failure in the extraction. In the accuraccy side, average inside \textbf{(AI)} is the average distance inside the vessel, it uses the annotated radius to score it. The observer score equal to 50 points, say if we do better ($>$50 points) or worst ($<$50 points).
+
+\subsection{Lesion Detection}
+
+For the machine learning section, the use of the confusion matrix provides us some insights about the algorithm performance. The calcification detection framework defined, use a slice-based  approach. Therefore, it is straightforward to use slices as the evaluating unit and propose slice-based definitions of TP, TN, FP and FN \ref{tb:les_measures}. 
+
+\begin{table*}
+\scriptsize
+\caption{Stenosis detection, as compared to CTA and CCA reference standard. Descriptions of true-positive (TP), false-negative (FP), false-positive (FP) and true-negative (TN) detection.}
+\centering
+\begin{tabular}{|c|p{9cm}|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Detection}} &\multicolumn{1}{p{9cm}|}{\textbf{Description} for slice-based analysis}\\
+\hline
+\textbf{TP}&Both the reference standard and the algorithmslice have mixed or calcified plaque.\\
+\textbf{FN}&The reference standard slice has mixed or calcified plaque while the algorithm slice has not mixed or calcified plaque.\\
+\textbf{TN}&The reference standard slice has not mixed or calcified plaque while the algorithm slice has mixed or calcified plaque.\\
+\textbf{FP}&Both the reference standard and the algorithm slice have not mixed or calcified plaque.\\
+\hline
+\end{tabular}
+\vspace{-0.3cm}
+\label{tb:les_measures}
+\normalsize
+\end{table*}
+
+Statistical measures \citep{Fawcett2004} like accuracy, specificity and precision were evaluated using the slice-based rules defined above.
+\textbf{Sensitivity:} Equivalent to recall or true positive rate. The sensitivity tells us how likely the test is come back positive (there is not plaque) in someone who has not plaque.
+\begin{center}
+$Sens =  \cfrac{(TP)}{( TP + FN )} $
+\end{center}
+
+\textbf{Specificity:} Also called the true negative rate. The specificity tells us how likely the test is come back negative (there is plaque) in someone who has plaque.
+\begin{center}
+$Spec = \cfrac{TN}{FP+TN}$
+\end{center}
+
+\textbf{Positive predictive value:} The precision in non-calcified slices 
+\begin{center}
+$PPV= \cfrac{TP}{TP+FP}$
+\end{center}
+
+\textbf{Negative predictive value:} The precision in calcified slices.
+\begin{center}
+$PPV= \cfrac{TN}{FN+TN}$
+\end{center}
+
+\textbf{Accuracy:} The overall classification accuracy is defined as:
+\begin{center}
+$ACC= \cfrac{TP+TN}{TP+FP+FN+TN}$
+\end{center}
+
+\section{Centerline Extraction Experiments}
+
+\subsection{Experiment I: MFlux in CAT08 Challenge}
+
+The centerline experiments where done using the eight training datasets from CAT08 challenge. For each patient, four vessels are provided in separated files. Since the consensus centerlines (done by three observers) are available in this experiment with their inter-observer variability measures, a quantitative analysis was performed using the standard framework proposed by ~\citep{Schaap2009}. Also, dataset results have been sent to the Web-based evaluation framework in order to verify the method results.
+
+\subsection{Experiment II: MFlux in MICCAI2012 Challenge}
+
+During the ``Stenoses Detection, Quantification and Lumen Segmentation challenge'', our team failed extracting some  vessels in problematic images (dataset 01 and dataset 05). Therefore, a correct and complete extraction is mandatory with this new version. Figure \ref{fig:exp2_dt05} shows our new framework processing one of the problematic datasets (dataset 05).
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=4.0in]{./Figures/dt05v01.png}
+		\includegraphics[width=4.0in]{./Figures/dt05v01_cpr.png}
+	\caption[MICCAI2012 Extraction]{\textit{Top}, Interactive RCA vessel extraction (dataset 05) . \textit{Bottom}, CPR visualization of the vessel extracted.}
+	\label{fig:exp2_dt05}
+\end{figure}
+
+\subsection{Experiment III: MFlux VS Gulsun \& Tek (itkRGC)}
+
+In the third experiment, we investigate the robustness of our method against a new version of \citep{Tek2008} developed by our team at Creatis. The performance of the team implementation (G\&T) was evaluated on the same CAT08 datasets. An additional results submission was done to the Web-platform. Also, problematic datasets at MICCAI2012 were visually evaluated with the two implementations (MFlux, G\&T). Figure ~\ref{fig:exp3_cpr} shows an axe extracted by the methods against the reference.
+
+\begin{figure}[htbp]
+	\centering
+		\includegraphics[width=4.0in]{./Figures/cpr_lkeb.png}
+		\includegraphics[width=4.0in]{./Figures/cpr_gt.png}
+		\includegraphics[width=4.0in]{./Figures/cpr_mflux.png}
+	\caption[Centerline Comparison]{Centerline visual assesment between: \textit{Top}, MICCAI 2012 Reference. \textit{Middle}, G \& T axe. \textit{Bottom}, MFlux axe.}
+	\label{fig:exp3_cpr}
+\end{figure}
+
+\section{Supervised Learning Experiment in Lesion Detection}
+
+The experiment was a leave-one-out test, using the 16 data sets. A total of 126 vessels were used. 20 in the training step and remaining  have been used for quality assessment of the algorithm. Since, we are reducing the vessl scope (See section \ref{casd:hypo}),  no lesion repetions are present into the datasets. This experiment may not lead to outstanding results, but It will more realistic in terms of detection rates. Also, two additional algorithms (AdaBoostM1, Random Forest) have been added to check the RUSBoost performance with this skewed dataset.

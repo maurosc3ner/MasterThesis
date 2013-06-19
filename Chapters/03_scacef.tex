@@ -1,4 +1,4 @@
-\chapter{Semi-Automatic Coronary Artery Centerline Extraction Framework}
+\chapter{Semi-Automatic Coronary Artery Centerline Extraction Framework}\label{cent:cent}
 %
 
 \section{Introduction}
@@ -58,12 +58,12 @@ For each branch of the coronary artery tree, we divide our task in three steps:
 	\label{fig:dijk3_vs_dijk4}
 \end{figure}
 
-First, we enhance the coronary structures with a vesselness filter, this enhancement allows us to avoid surrounding structures like heart chambers or coronary veins. Due to its computational time (\~8minutes), the vesselness pre-processing is done at the begining and just one time over the entire image, further improvement can be done into this direction in terms of implementation.
+First, we enhance the coronary structures with a vesselness filter, this enhancement allows us to avoid surrounding structures like heart chambers or coronary veins. Due to its computational time ($\approx$ \textit{8minutes}), the vesselness pre-processing is done at the begining and just one time over the entire image, further improvement can be done into this direction in terms of implementation.
 Next, seed points are manually placed in the CTA image. Finally, the vesselness filter response is translated to a correct cost in order to keep the dijkstra expansion within the vessel, that is our path of interest.
 
 \section{Vessel Enhancement: Flux}\label{cent:flu}
 
-Firstly, introduced by [CITAR VASILEVSKY] as a geometric feature and later adapted to coronary vessels by \citep{Lesage2009a}. Flux is a gradient-based vesselness measure that exploits the orientation of gradient vectors by computing the gradient flux through the surface of an object. Lesage formulated Flux as the evaluation of the inward gradient flux through a 3D circular cross-section (See Fig. \ref{fig:fl_sch}).
+Firstly, introduced by \citep{Vasilevskiy2001} as a geometric feature and later adapted to coronary vessels by \citep{Lesage2009a}. Flux is a gradient-based vesselness measure that exploits the orientation of gradient vectors by computing the gradient flux through the surface of an object. Lesage formulated Flux as the evaluation of the inward gradient flux through a 3D circular cross-section (See Fig. \ref{fig:fl_sch}).
 
 \begin{figure}[ht]
 	\centering
@@ -147,9 +147,9 @@ f( I_{Flux};Cmin, Cmax, \alpha,\mu) = Cmin + Cmax - \cfrac{Cmax}{1+e^{-\alpha(I_
 	\label{fig:inv_cost}
 \end{figure}
 
-\section{Dealing with Bifurcations: Bezier's Curve}\label{cent:bezi}
+\section{Dealing with Bifurcations: Curve Approximation}\label{cent:bezi}
 
-As the centerline extraction advances, some part of the coronary artery vessel may present multiple centerpoints due to a vessel division (bifurcation). In order to refine the centerline points into individual vessels. A curve approximation [B\'ezier's] is applied as a refinement step (post-processing) (Figure \ref{fig:sp_vs_bz}). 
+As the centerline extraction advances, some part of the coronary artery vessel may present multiple centerpoints due to a vessel division (bifurcation). In order to refine the centerline points into individual vessels. A curve approximation \citep{Bartels1998} is applied as a refinement step (post-processing) (Figure \ref{fig:sp_vs_bz}). 
 
 \begin{figure}[ht]
 	\centering

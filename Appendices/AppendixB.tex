@@ -1,0 +1,234 @@
+% Appendix A
+
+\chapter{CreaCoro: A Coronary Lesion Visualization Framework}\label{AppendixB}
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=1.0\textwidth]{./Figures/heart3d.png}
+	\label{fig:longi_feat}
+\end{figure}
+\clearpage
+\section{Copyright}
+Esteban Correa, Universidad de los Andes or CREATIS-UMR do not offer any support for this product whatsoever. The program is offered free of charge. The executable program is copyrighted freeware by CREATIS-UMR.
+
+\section{Contributors}
+
+\textbf{Esteban Correa}
+\href{mailto:esteban.correa@creatis.insa-lyon.fr }{esteban.correa@creatis.insa-lyon.fr }.
+Master Student for methods and development.
+Universidad de los Andes, Bogot\'a D.C. Colombia.
+Université Lyon 1, France.
+
+\textbf{Claire Mouton}
+\href{mailto:claire.mouton@creatis.insa-lyon.fr}{claire.mouton@creatis.insa-lyon.fr}.
+Software engineer, info-dev team.
+CREATIS, CNRS UMR 5220, INSERM U1044.
+Université Lyon 1, INSA Lyon. France.
+
+\textbf{Eduardo Enrique Davila Serrano}
+\href{mailto:eduardo.davila@creatis.insa-lyon.fr }{eduardo.davila@creatis.insa-lyon.fr }.
+Software engineer, info-dev team.
+CREATIS, CNRS UMR 5220, INSERM U1044.
+Université Lyon 1, INSA Lyon. France.
+
+\textbf{M. Hern\'andez}
+\href{mailto:marc-her@uniandes.edu.co}{marc-her@uniandes.edu.co}
+Associate Professor.
+IMAGINE
+Universidad de los Andes, Bogot\'a D.C. Colombia.
+
+\textbf{M. Orkisz}
+\href{mailto:maciej.orkisz@creatis.insa-lyon.fr }{maciej.orkisz@creatis.insa-lyon.fr }.
+Associate Professor.
+CREATIS, CNRS UMR 5220, INSERM U1044.
+Université Lyon 1, INSA Lyon. France.
+
+\section{Introduction}
+This software is a computer program whose purpose is to evaluate the performance of different supervised based learning algorithms in the context of image processing (and more particularly on CTA images).
+The software has been designed for two main purposes:
+
+Firstly, creaCoroML allows you to use six different supervised learning methods. These methods have been chosen in order to works with a wide range of level-sets. You can select for instance classical methods such as AdaboostM1, or more recent approaches such as the one developed by Seiffert et al.
+ 
+Finally, the software allows you to compare the performance of the three methods on real CTA coronary vessels (MICCAI2012 datasets). The performance can be evaluated from measurements (e.g. using the confusion matrix, sensitivity or specificity) between a reference and the results of the prediction.
+
+\section{Software Presentation}
+
+The software is divided into 4 parts. We can identify:
+\begin{itemize}
+\item Feature extraction and pre-processing tools.
+\item Training and model generation code.
+\item Model comparison scripts.
+\item Interactive prediction and export of results code.
+\end{itemize}
+
+\subsection{System Requirements}
+
+\begin{itemize}
+\item At least 2Gb of ram (due to the size of CTA images).
+\item Windows or Linux operating systems.
+\item CreaTools Framework.
+\item At least Matlab R2012b with the following toolboxes: Optimization toolbox, statistics toolbox, curve fitting toolbox, image processing toolbox, ReadData3D\_version1k\/ mha (package to read mhd files).
+\item Example files\footnote{(Optional\*, check the wiki site for further information: \href{http://vip.creatis.insa-lyon.fr:9002/projects/creacurvedplanar/files}{http://vip.creatis.insa-lyon.fr:9002/projects/creacurvedplanar/files}.}.
+\end{itemize}
+
+\subsection{CreaTools Package Requirements}
+
+\begin{itemize}
+\item creaCoro
+\item creaVascularTree
+\end{itemize}
+
+\subsection{Matlab files}
+
+\begin{itemize}
+\item preprocessing.m
+\item randomForest\_Demo.m
+\item RUSBoost\_Demo.m
+\item AdaBoostM1\_Demo.m
+\item modelBenchmarking.m
+\item InteractivePrediction\_Demo.m
+\item src\/OstDistance.m
+\item ReadData3D\_version1k\/mha (package to read mhd files)
+\end{itemize}
+
+\section{Feature Extraction}
+
+\textbf{File(s)}
+\begin{itemize}
+\item preprocessing.m
+\end{itemize}
+
+\textbf{Inputs}
+\begin{itemize}
+\item Training Folder (reference file, \* .mhd, \* .raw).
+\item Testing Folder (reference file, \* .mhd, \* .raw).
+\end{itemize}
+
+\textbf{Outputs}
+\begin{itemize}
+\item Mat file containing train (trainData) and testing (testData) Data and its labels (yTrain, yTest). By default the matrix is called featureMatrix and its saved at tmp\_data folder.
+\end{itemize}
+
+\textbf{Description}
+
+In this step, all CPR (previously generated) vessels are pre-processed by the feature. It surfs through the centerline control points; control points and limits are defined automatically taking care of clinically relevant vessel structures. See chapter \ref{dect:dect} for detailed information.
+
+Also, you can generate by yourself the CPR, using the bbg file (CPR\_MICCAI12) in the bbEditor environment (See Fig. \ref{fig:cpr}). You will need the initial image (.mhd) and the 3D coordinates of the centerline (.txt).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/apb_cpr.png}
+		\includegraphics[width=0.7\textwidth]{./Figures/apb_cpr2.png}
+	\caption[CPR Extraction]{(\textit{Top}) CPR Extraction. (\textit{Bottom}) bbEditor Environment (source: CreaTools screenshot).}
+	\label{fig:cpr}
+\end{figure}
+
+Parameters like minimum and maximum radius; height of the cylinder and the equi-distal angle of the pattern can be customized, changing the size of the training feature array per point. 
+
+\section{Model Generation}
+
+\textbf{File(s)}
+\begin{itemize}
+\item randomForest\_Demo.m
+\item RUSBoost\_Demo.m
+\item AdaBoostM1\_Demo.m
+\end{itemize}
+
+\textbf{Inputs}
+\begin{itemize}
+\item tmp\_data folder (feature matrix file \*.mat).
+\end{itemize}
+
+\textbf{Outputs}
+\begin{itemize}
+\item models\/<modelUsed>.mat
+\end{itemize}
+
+\textbf{Description}
+
+Three separated learning methods are provided to build the model.
+The classification model uses 250 hundred trees or weak decision learners and a feature space of 289 dimensions equivalent to a cylinder of 5 slices. The training computation time over the entire training dataset is about \~ 13minutes with this configuration.
+
+\section{Model Comparison}
+
+\textbf{File(s)}
+\begin{itemize}
+\item modelBenchmarking.m
+\end{itemize}
+
+\textbf{Inputs}
+\begin{itemize}
+\item tmp\_results folder (feature matrix file \* .mat).
+\item Models folder (RUSBoost,randomForest,AdaBoostM1 .mat).
+\end{itemize}
+
+\textbf{Description}
+
+Comparison code is available in this package; you can check methods performance addressing the following measures over the same dataset (See section \ref{eval:eval}).:
+
+\begin{itemize}
+\item Classification error
+\item ROC curve
+\item Sensitivity
+\item Specificity
+\item Accuracy
+\item Positive per value
+\item Negative per value
+\end{itemize}
+
+Automatic plots are done superposing the information of the three methods (See Fig. \ref{fig:errcurve} and Fig. \ref{fig:roccurve}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/289Final.png}
+	\caption[Classification Curve]{Classification error curve.}
+	\label{fig:errcurve}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/rocFinal.png}
+	\caption[ROC Curve]{ROC Curve.}
+	\label{fig:roccurve}
+\end{figure}
+
+\section{Interactive Prediction}
+
+\textbf{File(s)}
+\begin{itemize}
+\item InteractivePrediction\_Demo.m
+\end{itemize}
+
+\textbf{Inputs}
+\begin{itemize}
+\item Testing vessels folder from frontAlgorithms package.
+\item Models folder (RUSBoost, randomForest, AdaBoostM1 .mat).
+\end{itemize}
+
+\textbf{Outputs}
+\begin{itemize}
+\item Text file with 3D points and label.
+\item Text file with 3D representative lesion points.
+\item Reference file (optional).
+\end{itemize}
+
+\textbf{Description}
+
+The interactive prediction script brings you the tools to interact with creaCoro and frontAlgorithms packages. It loads a CPR image previously extracted in frontAlgorithms package, then, it predicts calcified lesions. Exporting results are available to plot reference and prediction in creaCoro package. A basic GUI is provide to select datasets and vessels to predict (See Fig. \ref{fig:int1}). In this case, only one vessel at a time is possible to predict.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/apb_int1.png}
+		\includegraphics[width=0.3\textwidth]{./Figures/apb_int2.png}
+	\caption[Dataset Selection GUI]{Dataset and vessel selection GUI.}
+	\label{fig:int1}
+\end{figure}
+
+You can check results using the bbg file (creaCoroComplexBox\_rusboost) and bbEditor. You will need the image (.mhd) and the prediction output files (.txt). Reference data superposition is possible, since the application receive both files (prediction and reference) in order to visually verify the detection (See Fig. \ref{fig:apb_gui}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.9\textwidth]{./Figures/apb_gui.png}
+	\caption[Lesion Visualization GUI]{Full creaCoro GUI superposition using optional reference file (source: CreaTools screenshot).}
+	\label{fig:apb_gui}
+\end{figure}

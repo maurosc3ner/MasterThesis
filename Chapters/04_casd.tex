@@ -1,0 +1,135 @@
+\chapter{Coronary Artery Stenoses Detection}\label{dect:dect}
+%
+
+\section{Introduction}
+
+Today, coronary artery lesion assesment is time consumming and prone to errors for physicians, who have to explore a vast amount of data. For this reason, computer-aided diagnosis systems have been introduced as complementary tools to assist radiologists, focusing their attention to certain image areas where potential lesions could be placed.
+A variety of learning-based algorithms have been proposed in the literature for plaque detection in CTAimages. Some authors \citep{Mittal2010, Zuluaga2011c} evidence problems dealing with artery bifurcations, due to their similarity to lesions. In order to avoid this problem, we take the best from both solutions. A vessel hypothesis is defined to keep the information at bifurcation zones, and a longitudinal analysis is added to our extended feature pattern, capturing the entire lesion and neighborhood information. Also, a simpler learning technique is used to reduce the training time related to oversample the minority class.
+This method detect calcified lesions in coronary vessel centerlines, a steerable cylinder-based feature is computed along the coronary vessel, then, an adapted AdaBoost version for imbalanced problems \citep{Seiffert2010} is used in the prediction step. Finally, lesions visualization and quantitative measures are provided to assess the computer-aided diagnosis. Qualitative and quantitative evaluation shown good lesion detection in multi-vendor datasets.
+
+The feature pattern is introduced in the following section. In Section \ref{dect:imba}, we discuse how to deal with the imbalanced nature of this dataset. Section \ref{dect:hypo} is dedicated to the hypothesis definition to avoid overfitting in the training step. Finally, the learning method is explained in the section \ref{dect:rus}
+
+\section{Cylindrical Sampling Pattern}
+
+Steerable features proposed by \citep{Zheng2007} are a sampling pattern methdology, where a specific shape of the pattern is selected and local features are sampled using oriented gradients along the pattern. Considering the vessel shape and appearance, a discrete cylinder pattern is well suited to compute the image features at every centerline point \ref{fig:cyl_sch}. The sampling points are selected around the centerline using an equi-angular discretization and three different radius scales. Since, this is not a multi scale cylinder, the length $L$ of the cylinder is fixed. Experimental results give us good performance using $L$ between $\left[5 ,9\right]$. 
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/cyl_sch.png}
+	\caption[Cylinder Pattern]{Cylinder pattern along the centerline.}
+	\label{fig:cyl_sch}
+\end{figure}
+
+
+\subsection{Intensity Features}
+
+The following nine local image features are computed at a radius r, where (0 $<$ r $≤$ R) (See Fig. \ref{fig:2d_sp} ): average, minimum and maximum intensities ($I_{avg}$,$I_{min}$,$I_{max}$), gradients along the radial direction ($\nabla r_{avg}$,$\nabla r_{min}$,$\nabla r_{max}$) and gradients along the tangent direction ($\nabla t_{avg}$,$\nabla t_{min}$,$\nabla t_{max}$) as \citep{Mittal2010} (See Fig. \ref{fig:2DMultiScaleIntensity}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.4\textwidth]{./Figures/2D_sp.png}
+	\caption[Cylinder Pattern 2D View]{Cylinder pattern 2D view.}
+	\label{fig:2d_sp}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{./Figures/2DMultiScaleIntensity.png}
+	\caption[Steerable Feature]{2D Steerable feature illustration in a cross-sectional slice.}
+	\label{fig:2DMultiScaleIntensity}
+\end{figure}
+
+\subsection{Radon Transform Analysis}
+
+The Radon transform is widely used in image processing for handling medical images \citep{Acharya2013}. The algorithm computes line integrals along many parallel beams or paths in an image from different angles theta by rotating the image around its centre. This transforms the image pixel intensity values along these lines into points in the Radon domain. Assuming that we are in the centerline, and the 2D view of the vessel is sane. If the vessel is healthy, the radon image will hold a tubular pattern with high mean values. In addition, This interpretation is shift-invariant, giving to the radon transform good possibilities to be included in our cylindrical pattern at different radius. In this way, our cylindrical pattern at every height $l$, becomes less sensitive to lesion position around the vessel’s axis (See Fig. \ref{fig:rd1}).
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.7\textwidth]{./Figures/radon1.png}
+		\includegraphics[width=0.7\textwidth]{./Figures/radon2.png}
+	\caption[Radon Transform]{Radon transform and analyisis of some cross-sectional slices.}
+	\label{fig:rd1}
+\end{figure}
+
+\subsection{Longitudinal Analysis}
+
+Most of the cross-sectional features are particularly significant for calcified lesions \citep{Tessmann2009}, as these regions have a high attenuation value, but they are limited to a 2D approach. In order to capture these lesions in every cross-section, we extend the same approach (average, minimum and maximum) used above but computed through the elongated cylinder, adding robustness in consecutive slices with presence of calcification (See Fig. \ref{fig:longi_feat}). A total of $3 \times 36$ features were computed.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.4\textwidth]{./Figures/samp_pat.png}
+	\caption[Elongated Cylinder Features]{Elongated cylinder features.}
+	\label{fig:longi_feat}
+\end{figure}
+
+\subsection{Distance to Ostium}
+A parametric curve is computed and normalized from the centerline, then the distance to ostium is added, since the intensity along the centerline varies a lot. 
+
+Finally, with a cylinder height $L = 5$ and a radial sampling $R = 3$, we get a $188_{cs}+108_{long}+1_{dist}=289$ dimensional feature vector.
+
+\section{Learning}
+
+\subsection{Dealing with skewed datasets}\label{dect:imba}
+
+Figure \ref{fig:skw_dat} shows the tabulate population of our dataset. The healthy slices outnumber calcified slices by 10 times at least. When examples of one class greatly outnumber examples of the other class(es), traditional data mining algorithms tend to favor classifying examples as belonging to the overrepresented (majority) class. Such a model would be ineffective at identifying examples of the minority class, which is frequently the class of interest (the positive class) \citep{Seiffert2010}.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.6\textwidth]{./Figures/skew_data.png}
+	\caption[Imbalanced Data]{Imbalanced data at the feature matrix.}
+	\label{fig:skw_dat}
+\end{figure}
+
+
+In general, there are 4 ways of dealing with skewed data \citep{Qi2004}:
+\begin{itemize}
+	\item Adjusting class prior probabilities to reflect realistic proportions.
+	\item Adjusting misclassification costs to represent realistic penalties.
+	\item Oversampling the minority class.
+	\item Undersampling the majority class.
+\end{itemize}
+
+Overall, the methods aiming to tackle with the imbalance data problem can be divided into two big categories:
+\begin{itemize}
+	\item Algorithm specific approach.
+	\item Pre-processing for the data (sampling strategies).
+\end{itemize}
+
+\textbf{Algorithm strategies}
+
+In the algorithmic side, boosting has been referred to as a kind of advanced data sampling technique. Boosting can improve the performance of any weak classifier (regardless of whether the data are imbalanced). The most common boosting algorithm is AdaBoost \citep{Freund1996}, which iteratively builds an ensemble of models. During each iteration, example weights are modified with the goal of correctly classifying examples in the next iteration, which were incorrectly classified during the current iteration.
+
+\textbf{Pre-processing strategies}
+
+In pre-processing strategies, data sampling balances the class distribution in the training data by either adding examples to the minority class (oversampling) \citep{Chawla2002} or removing examples from the majority class (undersampling) \citep{Seiffert2010}. Both undersampling and oversampling have their benefits and drawbacks. The main drawback associated with undersampling is the loss of information that comes with deleting examples from the training data. On the other hand, oversampling results in no lost information but it can lead to overfitting due to the duplicated data.
+
+\subsection{Vessel Hypothesis (CTA) VS Segment Hypothesis (CCA)}\label{dect:hypo}
+
+Tipically, we expect that lesions occur next to bifurcations, but, atherosclerosis happens everywhere there is a vessel. \citep{Mittal2010} and~\citep{Zuluaga2011a} evidence problems at vessel bifurcartions. Mittal proposed a vessel approach reducing the training vessels to the three main vessels (RCA, LAD, LCX), whereas Zuluaga states the limitation of her cross-sectional feature and the posibility to extended it in a future work. Both of them impact directly into the algorithm overfitting and segment bifurcations issues. To tackle this problem, we take the best from both sides, We keep the vessel approach from Mittal et al. and train our algorithm with selected vessels to avoid lesion repetitions, also a 3D sampling pattern is applied to capture the bifurcation information as it is. It is important to remark that choosing a wrong hypothesis could lead us to an overfitting or not good generalization scenario in our approach.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.5\textwidth]{./Figures/artery_anatomy.png}
+	\caption[Axial Coronary Anatomy]{Axial coronary anatomy (source: \citep{Kirisli2013})}
+	\label{fig:art_ana}
+\end{figure}
+
+\subsection{RUSBoost}\label{dect:rus}
+
+RUSBoost is an algorithm to handle class imbalance problem in data with discrete class labels. It uses a combination of RUS (\textit{random under-sampling}) and the standard boosting procedure AdaBoost \citep{Freund1996}, to better model the minority class by removing majority class samples. RUSboost ~\citep{Seiffert2010} undersamples the majority class(es) for every weak learner in the ensemble  (\textit{decision tree, most usually}). For example, if the majority class has 10 times as many observations as the minority class, it is undersampled 1/10. If the ensemble has say 100 trees, every observation in the majority class is used 100/10=10 times by the ensemble on average. Every observation in the minority class is used 100 times, once for every tree. This combination of simplicity, speed (undersampling VS oversampling ) and the small amount of illness labeled data in the dataset (See Fig. \ref{fig:skw_dat}), makes RUSBoost a good choice for our problem. In a very simple manner, it works as:
+
+\begin{algorithm}                      % enter the algorithm environment
+\caption{RUSBoost pseudocode}          % give the algorithm a caption
+\label{alg:rb}                           % and a label for \ref{} commands later in the document
+\begin{algorithmic}                    % enter the algorithmic environment
+	\STATE Given set S of examples $(x_{1},y_{1}),...,(x_{m},y_{m})$ with a minority class
+	\STATE Initialize D as  AdaBoost, i.e. $D_{1}(i)=1/m$ for all $i$
+    \FORALL{$each base learner$}
+            \STATE Create a temporal set of data $S'_{t}$ with distribution $D'_{t}$ undersampling the majority class randomly
+            \STATE Train a base learner with $S'_{t}$
+            \STATE Test the base learner on all data and calculated the error
+            \STATE Increase the importance of samples that are still miss-classified
+    \ENDFOR
+    \STATE return the final hypothesis $H(x)$
+\end{algorithmic}
+\end{algorithm}

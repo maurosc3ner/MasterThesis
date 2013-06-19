@@ -11,8 +11,9 @@
 \usepackage[comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 \usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
-\usepackage{algpseudocode}
-\usepackage{algorithm}
+%\usepackage{algpseudocode}
+\usepackage[titletoc]{appendix}
+\usepackage{algorithm,algorithmic}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
@@ -22,7 +23,7 @@
 \frontmatter	  % Begin Roman style (i, ii, iii, iv...) page numbering
 
 % Set up the Title Page
-\title  {THESIS NAME}
+\title  {Semi-automatic Coronary Lesion Detection in Computed Tomography Images}
 \authors  {\texorpdfstring
             {\href{mailto:Esteban.Correa@creatis.insa-lyon.fr}{Esteban Mauricio Correa Agudelo}}
             {Esteban Mauricio Correa Agudelo}
@@ -82,7 +83,7 @@
 
 \null\vfill
 % Now comes the " Quote", written in italics
-\textit{``La perseverancia y el esfuerzo \\ siempre ser\'{a}n recompensados con el \'{e}xito ...''}
+\textit{``Brick walls are there for a reason... they let us prove how badly we want things''... Randy Pausch}
 %\\
 %\\
 %--------------------
@@ -91,50 +92,44 @@
 %\textit{On}\= \textit{ce again}, \\ \> \textit{to my family, }\\ \> \textit{to my teachers,} \\ \> \textit{to my friends...}
 %\end{tabbing}
 
-\begin{flushright}
-%Extraer algo ...
-\end{flushright}
-
 
 \vfill\vfill\vfill\vfill\vfill\vfill\null
 \clearpage  % Funny Quote page ended, start a new page
 %% ----------------------------------------------------------------
 
-% The Abstract Page
-\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
-\abstract{
-\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-
-%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-Abstract en ingles
-%Furthermore, coronary arteries play an important role in cardiovascular system and its diseases are mainly caused by the development and accumulation of plaques in artery walls. 
-
-
-
-}
-
-\clearpage  % Abstract ended, start a new page
+%% The Abstract Page
+%\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+%\abstract{
+%\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+%
+%%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%Abstract en ingles
+%%Furthermore, coronary arteries play an important role in cardiovascular system and its diseases are mainly caused by the development and accumulation of plaques in artery walls. 
+%
+%}
+%
+%\clearpage  % Abstract ended, start a new page
 %% ----------------------------------------------------------------
-
-% The Abstract Page
-\addtotoc{R\'{e}sum\'{e}}  % Add the "Abstract" page entry to the Contents
-\resume{
-\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-
-%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-
-Abstract en frances
-%Les maladies cardiovasculaires demeurent la premi\`{e}re cause de mortalit\'{e} dans le monde. Pour d\'{e}tecter et quantifier les l\'{e}sions dans les art\`{e}res coronaires, l'approche classique est de commencer par localiser de points de d\'{e}part des art\`{e}res (ostia) et d'extraire la ligne centrale (axe) du vaisseau. Ces donn\'{e}es sont n\'{e}cessaires pour ex\'{e}cuter la segmentation du lumen vasculaire et elles aident \`{a} la r\'{e}alisation des t\^{a}ches suivantes comme la d\'{e}tection de l\'{e}sions et la quantification de st\'{e}noses. En raison de l'int\'{e}r\^{e}t social, m\'{e}dical et acad\'{e}mique de ce sujet, ce m\'{e}moire pr\'{e}sente quelques contributions \`{a} l'\'{e}tude d'art\`{e}res coronaires dans des images d'angiographie par tomodensitom\'{e}trique, particuli\`{e}rement dans l'extraction des axes et la segmentation du lumen.
-
-%Dans un premier temps, nous d\'{e}crivons une m\'{e}thode d'extraction des axes d\'{e}velopp\'{e}e dans notre groupe et nous proposons un algorithme pour le recentrage des axes dans les plans orthogonaux \`{a} leurs directions principales. Apr\`{e}s ce traitement, les nouveaux axes ont sembl\'{e} \^{e}tre mieux centr\'{e}s notamment dans le cas des sections saines, avec n\'{e}anmoins des probl\`{e}mes lorsque les axes pr\'{e}sentent des plaques calcifi\'{e}es ou des bifurcations. Suite \`{a} cela, nous pr\'{e}sentons six m\'{e}thodes de segmentation du lumen cat\'{e}goris\'{e}es dans deux groupes principaux: techniques classiques et techniques de classification. Les meilleurs r\'{e}sultats qualitatifs ont \'{e}t\'{e} obtenus par des m\'{e}thodes bas\'{e}es sur des contours actifs et de la croissance de r\'{e}gion. L'\'{e}tude montre quelques difficult\'{e}s pour faire une validation ad\'{e}quate avec les donn\'{e}es de r\'{e}f\'{e}rence, ce qui est une des raisons majeures qui fait que l'on obtient un score de Dice tr\`{e}s bas en utilisant un algorithme des k-moyennes (66.48 \%) score comparable aux r\'{e}sultats obtenus par un seuillage classique (65.20 \%), Ceci est caus\'{e} par la pr\'{e}sence des r\'{e}gions faisant partie du lumen vasculaire e.g. une partie de l'aorte pr\`{e}s de l'ostium, mais n'\'{e}tant pas annot\'{e}es comme telles. Ces r\'{e}gions sont donc reconnues comme des faux positifs. 
-
-\clearpage
+%
+%% The Abstract Page
+%\addtotoc{R\'{e}sum\'{e}}  % Add the "Abstract" page entry to the Contents
+%\resume{
+%\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+%
+%%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%
+%Abstract en frances
+%%Les maladies cardiovasculaires demeurent la premi\`{e}re cause de mortalit\'{e} dans le monde. Pour d\'{e}tecter et quantifier les l\'{e}sions dans les art\`{e}res coronaires, l'approche classique est de commencer par localiser de points de d\'{e}part des art\`{e}res (ostia) et d'extraire la ligne centrale (axe) du vaisseau. Ces donn\'{e}es sont n\'{e}cessaires pour ex\'{e}cuter la segmentation du lumen vasculaire et elles aident \`{a} la r\'{e}alisation des t\^{a}ches suivantes comme la d\'{e}tection de l\'{e}sions et la quantification de st\'{e}noses. En raison de l'int\'{e}r\^{e}t social, m\'{e}dical et acad\'{e}mique de ce sujet, ce m\'{e}moire pr\'{e}sente quelques contributions \`{a} l'\'{e}tude d'art\`{e}res coronaires dans des images d'angiographie par tomodensitom\'{e}trique, particuli\`{e}rement dans l'extraction des axes et la segmentation du lumen.
+%
+%%Dans un premier temps, nous d\'{e}crivons une m\'{e}thode d'extraction des axes d\'{e}velopp\'{e}e dans notre groupe et nous proposons un algorithme pour le recentrage des axes dans les plans orthogonaux \`{a} leurs directions principales. Apr\`{e}s ce traitement, les nouveaux axes ont sembl\'{e} \^{e}tre mieux centr\'{e}s notamment dans le cas des sections saines, avec n\'{e}anmoins des probl\`{e}mes lorsque les axes pr\'{e}sentent des plaques calcifi\'{e}es ou des bifurcations. Suite \`{a} cela, nous pr\'{e}sentons six m\'{e}thodes de segmentation du lumen cat\'{e}goris\'{e}es dans deux groupes principaux: techniques classiques et techniques de classification. Les meilleurs r\'{e}sultats qualitatifs ont \'{e}t\'{e} obtenus par des m\'{e}thodes bas\'{e}es sur des contours actifs et de la croissance de r\'{e}gion. L'\'{e}tude montre quelques difficult\'{e}s pour faire une validation ad\'{e}quate avec les donn\'{e}es de r\'{e}f\'{e}rence, ce qui est une des raisons majeures qui fait que l'on obtient un score de Dice tr\`{e}s bas en utilisant un algorithme des k-moyennes (66.48 \%) score comparable aux r\'{e}sultats obtenus par un seuillage classique (65.20 \%), Ceci est caus\'{e} par la pr\'{e}sence des r\'{e}gions faisant partie du lumen vasculaire e.g. une partie de l'aorte pr\`{e}s de l'ostium, mais n'\'{e}tant pas annot\'{e}es comme telles. Ces r\'{e}gions sont donc reconnues comme des faux positifs. 
+%
+%\clearpage
 
 %Toutes les techniques de segmentation test\'{e}es pr\'{e}sentent des inconv\'{e}nients importants en raison de la difficult\'{e} \`{a} exprimer un mod\`{e}le g\'{e}om\'{e}trique explicite et un profil d'intensit\'{e} g\'{e}n\'{e}rique des art\`{e}res coronaires, particuli\`{e}rement dans le cas de bifurcations et de l\'{e}sions. Afin d'\'{e}viter cette mod\'{e}lisation explicite, nous avons utilis\'{e} la m\'{e}thode de s\'{e}parateurs \`{a} vaste marge, consid\'{e}r\'{e}e comme une technique de classification puissante, mais nous avons obtenu des r\'{e}sultats faibles de segmentation avec un score Dice en dessous de 50\% et une augmentation consid\'{e}rable de co{\^u}ts informatiques pendant les phases d'entrainement. Ceci est probablement d{\^u} \`{a} une s\'{e}lection de descripteurs inadapt\'{e}e pour d\'{e}crire le lumen. Finalement, des efforts suppl\'{e}mentaires doivent \^{e}tre faits pour d\'{e}finir un cadre d'\'{e}valuation complet qui permettrait la comparaison des m\'{e}thodes et l'analyse des art\`{e}res coronaires.
 
-}
+%}
 
-\clearpage  % Abstract ended, start a new page
+%\clearpage  % Abstract ended, start a new page
 %% ----------------------------------------------------------------
 
 \setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
@@ -143,7 +138,13 @@ Abstract en frances
 \acknowledgements{
 \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
 
-Dar las gracias (REDACTAR)
+First of all, I would like to thank my advisors Prof. Marcela Hern\'andez, Prof. Leonardo Fl\'orez and Prof. Maciej Orkisz for giving me the opportunity to work and learn by their side during my internship at CREATIS-UMR. It has been a pleasure to work with you, despite the long, tiring and sometimes difficult journeys.
+
+I owe my deepest gratitude to all those who kindly shared some of their knowledge with no other interest than making things better. Thanks a lot to William Romero for the valuable discussions at the coffee break. Leonardo for his suggestions on code implementation. A special word goes to Juan Diego for his invaluable help, his disposition to answer all my questions and his great enthusiasm. You represent what I consider science should be.
+
+A big thank-you goes to my family for their unconditional support. My father, mother and my love Paola for their encouragement and patience in this journey. 
+
+Gracias totales.
 
 }
 \clearpage  % End of the Acknowledgements
@@ -221,32 +222,43 @@ Dar las gracias (REDACTAR)
 \lhead{\emph{Introduction}}  
 \input{./Chapters/01_Introduction} % Introduction
 
-\lhead{\emph{Semi-Automatic Coronary Artery Centerline Extraction Framework}}  
-\input{./Chapters/02_scacef} % Experimental Setup
+\lhead{\emph{Related Work}}  
+\input{./Chapters/02_RelatedWork} % Introduction
+
+\lhead{\emph{Semi-automatic Coronary Artery Centerline Extraction Framework}}  
+\input{./Chapters/03_scacef} % Experimental Setup
 
 \lhead{\emph{Coronary Artery Stenoses Detection}}  
-\input{./Chapters/03_casd} % Experimental Setup
+\input{./Chapters/04_casd} % Experimental Setup
 
 \lhead{\emph{Evaluation}}  
-\input{./Chapters/04_Evaluation} % Experimental Setup
+\input{./Chapters/05_Evaluation} % Experimental Setup
 
-\lhead{\emph{Evaluation}}  
-\input{./Chapters/05_Results} % Experimental Setup
+\lhead{\emph{Results}}  
+\input{./Chapters/06_Results} % Experimental Setup
+
+\lhead{\emph{Discussion \& Conclusions}}  
+\input{./Chapters/07_Conclusions} % Experimental Setup
 
 %\input{./Chapters/Chapter7} % Conclusion
 
 %% ----------------------------------------------------------------
 % Now begin the Appendices, including them as separate files
 
-%\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
-
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\begin{appendices}
+\appendixpage
+\noappendicestocpagenum
+\addappheadtotoc
 %\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+\lhead{Appendix A. \emph{frontAlgorithms: A Semi-automatic Coronary Centerline Extraction Framework}}
+\input{./Appendices/AppendixA}	% Appendix Title
 
-%\input{./Appendices/AppendixA}	% Appendix Title
-
-%\input{./Appendices/AppendixB} % Appendix Title
+\lhead{Appendix B. \emph{creaCoro: A Coronary Lesion Visualization Framework}}
+\input{./Appendices/AppendixB} % Appendix Title
 
 %\input{./Appendices/AppendixC} % Appendix Title
+\end{appendices}
 
 \addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
 \backmatter
@@ -256,7 +268,28 @@ Dar las gracias (REDACTAR)
 \renewcommand\bibname{References}
 \lhead{\emph{References}}  % Change the left side page header to "Bibliography"
 \bibliographystyle{unsrtnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+%\bibliographystyle{plain}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
 \bibliography{References}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+%% ----------------------------------------------------------------
 
+
+%% ----------------------------------------------------------------
+% The " Bio Page"
+\pagestyle{fancy}
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+\lhead{\emph{About the author}} 
+\chapter{About the author}
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.3\textwidth]{./Figures/Perfil.jpg}
+	\label{fig:perfil}
+\end{figure}
+
+Esteban Correa was born in Pereira, Colombia, in 1987. He received his B.E. degree in computer science from Universidad Tecnol\'ogica de Pereira (Pereira, Colombia), in 2009. During his B.E. Esteban worked in digital design and image processing at Sirius HPC Lab. In 2010, he was awarded a young researcher scholarship from The Administrative Department of Science, Technology and Innovation of Colombia - COLCIENCIAS. In 2011, he started his M.Sc at Universidad de los Andes (Bogot\'a D.C., Colombia). He joined to the Visual Computing Research Group - IMAGINE to work in HCI and image processing in medical imaging.
+Currently, He is doing his internship at the CREATIS-UMR at INSA Lyon, France. Also, He is pursuing a joint degree between Universit\'{e} Claude Bernard (Lyon, France) and Universidad de los Andes(Bogot\'a D.C., Colombia) focused on medical imaging.
+His research interests lie in the overlap of image processing, machine learning and computer graphics.
+
+%% ----------------------------------------------------------------
 \end{document}  % The End
 %% ----------------------------------------------------------------
